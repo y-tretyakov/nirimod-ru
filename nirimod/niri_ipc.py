@@ -112,7 +112,7 @@ def validate_config(config_path: str | None = None) -> tuple[bool, str]:
         cmd += ["--config", config_path]
     stdout, stderr, rc = _run_sync(cmd, timeout=10.0)
     if rc == 0:
-        return True, stdout.strip() or "Config is valid."
+        return True, stdout.strip() or "Конфиг корректен."
     return False, stderr.strip() or stdout.strip() or "Unknown validation error."
 
 
@@ -121,7 +121,7 @@ def load_config_file() -> tuple[bool, str]:
         ["niri", "msg", "action", "load-config-file"], timeout=10.0
     )
     if rc == 0:
-        return True, stdout.strip() or "Config applied."
+        return True, stdout.strip() or "Конфиг применён."
     return False, stderr.strip() or stdout.strip() or "Config reload failed."
 
 
