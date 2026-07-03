@@ -38,7 +38,7 @@ def _parse_color(color_str: str) -> Gdk.RGBA:
 
 class AppearancePage(BasePage):
     def build(self) -> Gtk.Widget:
-        tb, _, _, content = self._make_toolbar_page("Appearance")
+        tb, _, _, content = self._make_toolbar_page("Внешний вид")
         self._content = content
         self._build_content()
         return tb
@@ -49,17 +49,17 @@ class AppearancePage(BasePage):
         layout = find_or_create(nodes, "layout")
 
         fr_node = layout.get_child("focus-ring") or KdlNode("focus-ring")
-        fr_group = self._build_border_group("Focus Ring", "focus-ring", fr_node, layout)
+        fr_group = self._build_border_group("Кольцо фокуса", "focus-ring", fr_node, layout)
         content.append(fr_group)
 
         b_node = layout.get_child("border") or KdlNode("border")
-        b_group = self._build_border_group("Border", "border", b_node, layout)
+        b_group = self._build_border_group("Граница", "border", b_node, layout)
         content.append(b_group)
 
-        shadow_grp = Adw.PreferencesGroup(title="Shadow")
+        shadow_grp = Adw.PreferencesGroup(title="Тень")
         shadow_node = layout.get_child("shadow") or KdlNode("shadow")
 
-        shadow_on_row = Adw.SwitchRow(title="Enable Shadows")
+        shadow_on_row = Adw.SwitchRow(title="Включить тени")
         shadow_on_row.set_active(shadow_node.get_child("on") is not None)
         shadow_on_row.connect(
             "notify::active", lambda r, _: self._set_shadow_flag("on", r.get_active())
@@ -71,7 +71,7 @@ class AppearancePage(BasePage):
             value=soft_val, lower=0, upper=100, step_increment=1
         )
         softness_row = Adw.SpinRow(
-            title="Softness (blur radius)", adjustment=softness_adj, digits=0
+            title="Мягкость (радиус размытия)", adjustment=softness_adj, digits=0
         )
 
         softness_row._last_val = soft_val
@@ -89,7 +89,7 @@ class AppearancePage(BasePage):
         spread_adj = Gtk.Adjustment(
             value=spread_val, lower=-50, upper=100, step_increment=1
         )
-        spread_row = Adw.SpinRow(title="Spread", adjustment=spread_adj, digits=0)
+        spread_row = Adw.SpinRow(title="Распространение", adjustment=spread_adj, digits=0)
 
         spread_row._last_val = spread_val
 
@@ -103,9 +103,9 @@ class AppearancePage(BasePage):
         shadow_grp.add(spread_row)
 
         color_str = shadow_node.child_arg("color") or "#0007"
-        color_row = Adw.ActionRow(title="Shadow Color")
+        color_row = Adw.ActionRow(title="Цвет тени")
         color_btn = Gtk.ColorDialogButton(
-            dialog=Gtk.ColorDialog(title="Shadow Color", with_alpha=True)
+            dialog=Gtk.ColorDialog(title="Цвет тени", with_alpha=True)
         )
         color_btn.set_rgba(_parse_color(color_str))
         color_btn.set_valign(Gtk.Align.CENTER)
@@ -116,8 +116,8 @@ class AppearancePage(BasePage):
         shadow_grp.add(color_row)
 
         draw_behind_row = Adw.SwitchRow(
-            title="Draw Behind Window",
-            subtitle="Fixes corner artifacts with non-CSD apps",
+            title="Рисовать за окном",
+            subtitle="Исправляет артефакты углов в приложениях без CSD",
         )
         draw_behind_row.set_active(
             shadow_node.get_child("draw-behind-window") is not None
@@ -130,17 +130,17 @@ class AppearancePage(BasePage):
         content.append(shadow_grp)
 
         blur_grp = Adw.PreferencesGroup(
-            title="Blur (Global)",
+            title="Размытие (глобальное)",
             description=(
-                "Requires Niri 26.04 or later. Sets blur quality and optional "
-                "window blur rules."
+                "Требуется Niri 26.04 или новее. Задаёт качество размытия и правила "
+                "размытия окон."
             ),
         )
         blur_node = next((n for n in nodes if n.name == "blur"), None)
 
         blur_effects_row = Adw.SwitchRow(
-            title="Enable Blur Effects",
-            subtitle="Controls the compositor-level blur { off } setting",
+            title="Включить эффекты размытия",
+            subtitle="Управляет настройкой blur { off } на уровне композитора",
         )
         blur_effects_row.set_active(blur_effects_enabled(nodes))
         blur_effects_row.connect(
@@ -150,8 +150,8 @@ class AppearancePage(BasePage):
         blur_grp.add(blur_effects_row)
 
         blur_enabled_row = Adw.SwitchRow(
-            title="Force Blur on Windows",
-            subtitle="Adds background-effect { blur true } to the global window rule",
+            title="Принудительное размытие окон",
+            subtitle="Добавляет background-effect { blur true } в глобальное правило окна",
         )
         blur_enabled_row.set_active(global_window_blur_enabled(nodes))
         blur_enabled_row.connect(
@@ -161,8 +161,8 @@ class AppearancePage(BasePage):
         blur_grp.add(blur_enabled_row)
 
         focused_blur_row = Adw.SwitchRow(
-            title="Keep Focused Windows Blurred",
-            subtitle="Adds a focused-window rule that forces blur on",
+            title="Размывать активные окна",
+            subtitle="Добавляет правило для активного окна с принудительным размытием",
         )
         focused_blur_row.set_active(focused_window_blur_enabled(nodes))
         focused_blur_row.connect(
@@ -172,8 +172,8 @@ class AppearancePage(BasePage):
         blur_grp.add(focused_blur_row)
 
         xray_row = Adw.SwitchRow(
-            title="Use Xray Wallpaper Blur",
-            subtitle="Use wallpaper-only blur; disable for regular background blur",
+            title="Использовать Xray размытие обоев",
+            subtitle="Размытие только обоев; отключите для обычного размытия фона",
         )
         xray_row.set_active(global_window_xray_enabled(nodes))
         xray_row.connect(
@@ -187,7 +187,7 @@ class AppearancePage(BasePage):
             value=opacity_val, lower=0.1, upper=1.0, step_increment=0.05
         )
         opacity_row = Adw.SpinRow(
-            title="Window Opacity (1 = unset)", adjustment=opacity_adj, digits=2
+            title="Прозрачность окна (1 = не задано)", adjustment=opacity_adj, digits=2
         )
 
         opacity_row._last_val = opacity_val
@@ -202,8 +202,8 @@ class AppearancePage(BasePage):
         blur_grp.add(opacity_row)
 
         border_bg_row = Adw.SwitchRow(
-            title="Draw Border With Background",
-            subtitle="Disable to avoid focus colors behind translucent windows",
+            title="Рисовать границу с фоном",
+            subtitle="Отключите, чтобы избежать цветов фокуса за полупрозрачными окнами",
         )
         border_bg_row.set_active(get_global_draw_border_with_background(nodes))
         border_bg_row.connect(
@@ -217,7 +217,7 @@ class AppearancePage(BasePage):
             value=passes_val, lower=0, upper=10, step_increment=1
         )
         passes_row = Adw.SpinRow(
-            title="Passes", adjustment=passes_adj, digits=0
+            title="Проходы", adjustment=passes_adj, digits=0
         )
 
         passes_row._last_val = passes_val
@@ -235,7 +235,7 @@ class AppearancePage(BasePage):
         offset_adj = Gtk.Adjustment(
             value=offset_val, lower=0.0, upper=20.0, step_increment=0.1
         )
-        offset_row = Adw.SpinRow(title="Offset", adjustment=offset_adj, digits=1)
+        offset_row = Adw.SpinRow(title="Смещение", adjustment=offset_adj, digits=1)
 
         offset_row._last_val = offset_val
 
@@ -252,7 +252,7 @@ class AppearancePage(BasePage):
         noise_adj = Gtk.Adjustment(
             value=noise_val, lower=0.0, upper=1.0, step_increment=0.01
         )
-        noise_row = Adw.SpinRow(title="Noise", adjustment=noise_adj, digits=2)
+        noise_row = Adw.SpinRow(title="Шум", adjustment=noise_adj, digits=2)
 
         noise_row._last_val = noise_val
 
@@ -270,7 +270,7 @@ class AppearancePage(BasePage):
             value=saturation_val, lower=0.0, upper=5.0, step_increment=0.1
         )
         saturation_row = Adw.SpinRow(
-            title="Saturation", adjustment=saturation_adj, digits=1
+            title="Насыщенность", adjustment=saturation_adj, digits=1
         )
 
         saturation_row._last_val = saturation_val
@@ -286,12 +286,12 @@ class AppearancePage(BasePage):
 
         content.append(blur_grp)
 
-        misc_grp = Adw.PreferencesGroup(title="Window Geometry")
+        misc_grp = Adw.PreferencesGroup(title="Геометрия окна")
 
         cr_val = get_global_corner_radius(nodes)
         cr_adj = Gtk.Adjustment(value=cr_val, lower=0, upper=40, step_increment=1)
         cr_row = Adw.SpinRow(
-            title="Corner Radius (px)",
+            title="Радиус скругления (px)",
             adjustment=cr_adj,
             digits=0,
         )
@@ -313,7 +313,7 @@ class AppearancePage(BasePage):
     ) -> Adw.PreferencesGroup:
         grp = Adw.PreferencesGroup(title=title)
 
-        off_row = Adw.SwitchRow(title="Enable")
+        off_row = Adw.SwitchRow(title="Включить")
         off_row.set_active(node.get_child("off") is None)
         off_row.connect(
             "notify::active",
@@ -325,7 +325,7 @@ class AppearancePage(BasePage):
 
         width_val = int(node.child_arg("width") or 4)
         width_adj = Gtk.Adjustment(value=width_val, lower=1, upper=20, step_increment=1)
-        width_row = Adw.SpinRow(title="Width (px)", adjustment=width_adj, digits=0)
+        width_row = Adw.SpinRow(title="Ширина (px)", adjustment=width_adj, digits=0)
 
         width_row._last_val = width_val
 
@@ -339,8 +339,8 @@ class AppearancePage(BasePage):
         grp.add(width_row)
 
         for color_key, color_label in [
-            ("active-color", "Active Color"),
-            ("inactive-color", "Inactive Color"),
+            ("active-color", "Активный цвет"),
+            ("inactive-color", "Неактивный цвет"),
         ]:
             c_str = node.child_arg(color_key) or (
                 "#7fc8ff" if "active" in color_key else "#202020"
