@@ -25,52 +25,52 @@ from nirimod.pages.base import BasePage
 SCREENCAST_BLOCK_KEY = "block-out-from"
 
 BOOL_MATCH_LABELS = {
-    "is-active": "Is Active",
-    "is-floating": "Is Floating",
-    "is-focused": "Is Focused",
-    "at-startup": "At Startup",
+    "is-active": "Активно",
+    "is-floating": "Плавающее",
+    "is-focused": "В фокусе",
+    "at-startup": "При запуске",
 }
 
 BOOL_ACTION_LABELS = {
-    "open-maximized": "Open Maximized",
-    "open-fullscreen": "Open Fullscreen",
-    "open-floating": "Open Floating",
-    SCREENCAST_BLOCK_KEY: "Block from Screencast",
-    "draw-border-with-background": "Draw Border with Background",
-    "clip-to-geometry": "Clip to Geometry",
-    "prefer-no-csd": "Prefer No CSD",
+    "open-maximized": "Открывать развёрнутым",
+    "open-fullscreen": "Открывать полноэкранным",
+    "open-floating": "Открывать плавающим",
+    SCREENCAST_BLOCK_KEY: "Блокировать запись экрана",
+    "draw-border-with-background": "Рисовать границу с фоном",
+    "clip-to-geometry": "Обрезать по геометрии",
+    "prefer-no-csd": "Без CSD",
 }
 
 NUM_ACTION_LABELS = {
-    "opacity": ("Opacity", 0.0, 1.0, 0.05, 2),
-    "geometry-corner-radius": ("Corner Radius (px)", 0, 40, 1, 0),
-    "min-width": ("Min Width (px)", 0, 7680, 1, 0),
-    "min-height": ("Min Height (px)", 0, 7680, 1, 0),
-    "max-width": ("Max Width (px)", 0, 7680, 1, 0),
-    "max-height": ("Max Height (px)", 0, 7680, 1, 0),
+    "opacity": ("Прозрачность", 0.0, 1.0, 0.05, 2),
+    "geometry-corner-radius": ("Радиус скругления (px)", 0, 40, 1, 0),
+    "min-width": ("Мин. ширина (px)", 0, 7680, 1, 0),
+    "min-height": ("Мин. высота (px)", 0, 7680, 1, 0),
+    "max-width": ("Макс. ширина (px)", 0, 7680, 1, 0),
+    "max-height": ("Макс. высота (px)", 0, 7680, 1, 0),
 }
 
 STR_ACTION_LABELS = {
-    "open-on-workspace": "Open on Workspace",
-    "open-on-output": "Open on Output",
+    "open-on-workspace": "Открывать на workspace",
+    "open-on-output": "Открывать на мониторе",
 }
 
 LAYER_BOOL_ACTION_LABELS = {
-    "place-within-backdrop": "Place Within Backdrop",
-    SCREENCAST_BLOCK_KEY: "Block from Screencast",
+    "place-within-backdrop": "Размещать под фоном",
+    SCREENCAST_BLOCK_KEY: "Блокировать запись экрана",
 }
 
 FLOATING_POSITION_PRESETS = [
-    ("Top", "top"),
-    ("Bottom", "bottom"),
-    ("Left", "left"),
-    ("Right", "right"),
+    ("Сверху", "top"),
+    ("Снизу", "bottom"),
+    ("Слева", "left"),
+    ("Справа", "right"),
 ]
-CUSTOM_FLOATING_POSITION_LABEL = "Custom"
+CUSTOM_FLOATING_POSITION_LABEL = "Своё"
 FLOATING_POSITION_LOCATION_LABELS = [
     label for label, _ in FLOATING_POSITION_PRESETS
 ] + [CUSTOM_FLOATING_POSITION_LABEL]
-FLOATING_POSITION_CUSTOM_FIELD_LABELS = ["X Offset (px)", "Y Offset (px)"]
+FLOATING_POSITION_CUSTOM_FIELD_LABELS = ["Смещение X (px)", "Смещение Y (px)"]
 CUSTOM_FLOATING_POSITION_INDEX = len(FLOATING_POSITION_PRESETS)
 DEFAULT_FLOATING_POSITION_RELATIVE_TO = "top"
 CUSTOM_FLOATING_POSITION_RELATIVE_TO = "top-left"
@@ -91,19 +91,19 @@ SIZE_PERCENT_PRESETS = [
     ("100%", 1.0),
 ]
 SIZE_MODE_LABELS = [label for label, _ in SIZE_PERCENT_PRESETS] + [
-    "Custom %",
-    "Fixed (px)",
+    "Свой %",
+    "Фиксированная (px)",
 ]
 CUSTOM_SIZE_INDEX = len(SIZE_PERCENT_PRESETS)
 FIXED_SIZE_INDEX = CUSTOM_SIZE_INDEX + 1
 WINDOW_SIZE_CONTROLS = {
     "default-column-width": WindowSizeControlConfig(
-        title="Default Width",
+        title="Ширина по умолчанию",
         initial_percent=50.0,
         fixed=800,
     ),
     "default-window-height": WindowSizeControlConfig(
-        title="Default Height",
+        title="Высота по умолчанию",
         initial_percent=100.0,
         fixed=600,
     ),
@@ -267,7 +267,7 @@ def _rule_summary(rule: KdlNode) -> tuple[str, str]:
     """Return (title, subtitle) for a window-rule row."""
     matches = rule.get_children("match")
     if not matches:
-        title = "Global Rule"
+        title = "Глобальное правило"
     else:
         parts = []
         for m in matches:
@@ -275,7 +275,7 @@ def _rule_summary(rule: KdlNode) -> tuple[str, str]:
                 parts.append(f"{k}: {v}")
             for a in m.args:
                 parts.append(str(a))
-        title = "  •  ".join(parts) if parts else "(any)"
+        title = "  •  ".join(parts) if parts else "(любой)"
 
     badges = []
     for c in rule.children:
@@ -298,16 +298,16 @@ def _rule_summary(rule: KdlNode) -> tuple[str, str]:
         else:
             badges.append(c.name.replace("-", " "))
 
-    subtitle = ",  ".join(badges[:5]) if badges else "no actions"
+    subtitle = ",  ".join(badges[:5]) if badges else "нет действий"
     return GLib.markup_escape_text(title), GLib.markup_escape_text(subtitle)
 
 
 def _layer_rule_summary(rule: KdlNode) -> tuple[str, str]:
     match_node = rule.get_child("match")
     ns = str(match_node.props.get("namespace", "")) if match_node else ""
-    title = f"namespace: {ns}" if ns else "(any)"
+    title = f"namespace: {ns}" if ns else "(любой)"
     actions = [c.name.replace("-", " ") for c in rule.children if c.name != "match"]
-    subtitle = ",  ".join(actions) if actions else "no actions"
+    subtitle = ",  ".join(actions) if actions else "нет действий"
     return GLib.markup_escape_text(title), GLib.markup_escape_text(subtitle)
 
 
@@ -316,27 +316,27 @@ def _layer_rule_summary(rule: KdlNode) -> tuple[str, str]:
 
 class WindowRulesPage(BasePage):
     def build(self) -> Gtk.Widget:
-        tb, header, _, content = self._make_toolbar_page("Window Rules")
+        tb, header, _, content = self._make_toolbar_page("Правила окон")
         self._content = content
 
-        add_win_btn = Gtk.Button(label="Add Window Rule")
+        add_win_btn = Gtk.Button(label="Добавить правило окна")
         add_win_btn.add_css_class("flat")
-        add_win_btn.set_tooltip_text("Add a new window rule")
+        add_win_btn.set_tooltip_text("Добавить новое правило окна")
         add_win_btn.connect("clicked", self._on_add)
         header.pack_end(add_win_btn)
 
-        add_layer_btn = Gtk.Button(label="Add Layer Rule")
+        add_layer_btn = Gtk.Button(label="Добавить правило слоя")
         add_layer_btn.add_css_class("flat")
-        add_layer_btn.set_tooltip_text("Add a new layer-shell rule")
+        add_layer_btn.set_tooltip_text("Добавить новое правило layer-shell")
         add_layer_btn.connect("clicked", self._on_add_layer)
         header.pack_end(add_layer_btn)
 
-        self._rules_grp = Adw.PreferencesGroup(title="Window Rules")
+        self._rules_grp = Adw.PreferencesGroup(title="Правила окон")
         content.append(self._rules_grp)
 
         self._layer_rules_grp = Adw.PreferencesGroup(
-            title="Layer Rules",
-            description="Rules for layer-shell surfaces (bars, overlays, wallpapers…)",
+            title="Правила слоёв",
+            description="Правила для layer-shell поверхностей (панели, оверлеи, обои…)",
         )
         content.append(self._layer_rules_grp)
 
@@ -358,8 +358,8 @@ class WindowRulesPage(BasePage):
             return
         rules = self._get_rules()
         new_grp = Adw.PreferencesGroup(
-            title="Window Rules",
-            description=f"{len(rules)} rule(s) — click a row to edit",
+            title="Правила окон",
+            description=f"{len(rules)} правил — нажмите для редактирования",
         )
         for i, rule in enumerate(rules):
             new_grp.add(self._make_rule_row(rule, i))
@@ -393,7 +393,7 @@ class WindowRulesPage(BasePage):
         del_btn.set_valign(Gtk.Align.CENTER)
         del_btn.add_css_class("flat")
         del_btn.add_css_class("error")
-        del_btn.set_tooltip_text("Delete rule")
+        del_btn.set_tooltip_text("Удалить правило")
         del_btn.connect("clicked", lambda *_, i=idx: self._on_delete(i))
         row.add_suffix(del_btn)
 
@@ -418,7 +418,7 @@ class WindowRulesPage(BasePage):
         self._rebuild()
 
         # show a quick-undo toast
-        t = Adw.Toast(title="Window rule deleted", button_label="Undo", timeout=5)
+        t = Adw.Toast(title="Правило окна удалено", button_label="Отменить", timeout=5)
         t.connect("button-clicked", lambda *_: self._win._do_undo())
         self._win._toast_overlay.add_toast(t)
 
@@ -428,14 +428,14 @@ class WindowRulesPage(BasePage):
         enabled, x, y, relative_to = _floating_position_setting(rule)
 
         enabled_row = Adw.SwitchRow(
-            title="Default Floating Position",
-            subtitle="Set the initial position for matching floating windows",
+            title="Позиция плавающего окна",
+            subtitle="Начальная позиция для соответствующих плавающих окон",
         )
         enabled_row.set_active(enabled)
         group.add(enabled_row)
 
         location_model = Gtk.StringList.new(FLOATING_POSITION_LOCATION_LABELS)
-        location_row = Adw.ComboRow(title="Location", model=location_model)
+        location_row = Adw.ComboRow(title="Расположение", model=location_model)
         location_row.set_selected(_floating_position_location_index(x, y, relative_to))
         group.add(location_row)
 
@@ -539,9 +539,18 @@ class WindowRulesPage(BasePage):
         kind, value = _window_size_setting(rule, key)
         title = cfg.title
 
+        if key == "default-column-width":
+            override_lbl = "Переопределить ширину"
+            custom_lbl = "Своя ширина (%)"
+            fixed_lbl = "Фикс. ширина (px)"
+        else:
+            override_lbl = "Переопределить высоту"
+            custom_lbl = "Своя высота (%)"
+            fixed_lbl = "Фикс. высота (px)"
+
         override_row = Adw.SwitchRow(
-            title=f"Override {title}",
-            subtitle="Off writes no explicit size rule",
+            title=override_lbl,
+            subtitle="Выкл. — не задавать размер",
         )
         override_row.set_active(kind != "default")
         group.add(override_row)
@@ -562,7 +571,7 @@ class WindowRulesPage(BasePage):
             page_increment=5.0,
         )
         custom_row = Adw.SpinRow(
-            title=f"Custom {title} (%)", adjustment=custom_adj, digits=2
+            title=custom_lbl, adjustment=custom_adj, digits=2
         )
         group.add(custom_row)
 
@@ -577,7 +586,7 @@ class WindowRulesPage(BasePage):
             page_increment=100,
         )
         fixed_row = Adw.SpinRow(
-            title=f"Fixed {title} (px)", adjustment=fixed_adj, digits=0
+            title=fixed_lbl, adjustment=fixed_adj, digits=0
         )
         group.add(fixed_row)
 
@@ -625,13 +634,13 @@ class WindowRulesPage(BasePage):
         return _make_size_node(key, "proportion", value)
 
     def _show_rule_dialog(self, rule: KdlNode | None, rule_idx: int):
-        dialog = Adw.Dialog(title="Window Rule")
+        dialog = Adw.Dialog(title="Правило окна")
         dialog.set_content_width(520)
         dialog.set_content_height(680)
 
         toolbar_view = Adw.ToolbarView()
         hdr = Adw.HeaderBar()
-        title_lbl = "Edit Window Rule" if rule else "New Window Rule"
+        title_lbl = "Редактировать правило окна" if rule else "Новое правило окна"
         hdr.set_title_widget(Adw.WindowTitle(title=title_lbl))
         toolbar_view.add_top_bar(hdr)
 
@@ -643,18 +652,19 @@ class WindowRulesPage(BasePage):
 
         # ── Match criteria ────────────────────────────────────────────────
         match_grp = Adw.PreferencesGroup(
-            title="Match Criteria",
-            description="Leave fields empty to match any window",
+            title="Критерии соответствия",
+            description="Оставьте поля пустыми для всех окон",
         )
         match_node = rule.get_child("match") if rule else None
 
-        app_id_row = Adw.EntryRow(title="App ID (regex, e.g. ^kitty$)")
+        app_id_row = Adw.EntryRow(title="App ID (regex, например: ^kitty$)")
+
         app_id_row.set_text(
             str(match_node.props.get("app-id", "")) if match_node else ""
         )
         match_grp.add(app_id_row)
 
-        title_row = Adw.EntryRow(title="Window Title (regex)")
+        title_row = Adw.EntryRow(title="Заголовок окна (regex)")
         title_row.set_text(str(match_node.props.get("title", "")) if match_node else "")
         match_grp.add(title_row)
 
@@ -670,8 +680,8 @@ class WindowRulesPage(BasePage):
 
         # ── Visibility & layout ───────────────────────────────────────────
         layout_grp = Adw.PreferencesGroup(
-            title="Layout & Visibility",
-            description="Window-size overrides apply when a matching window opens.",
+            title="Расположение и видимость",
+            description="Переопределения размера применяются при открытии окна.",
         )
 
         size_controls = {
@@ -681,8 +691,8 @@ class WindowRulesPage(BasePage):
 
         column_display_model = Gtk.StringList.new(COLUMN_DISPLAY_RULE_LABELS)
         column_display_row = Adw.ComboRow(
-            title="Default Column Display",
-            subtitle="Columns created from matching windows",
+            title="Отображение колонок",
+            subtitle="Колонки, создаваемые из соответствующих окон",
             model=column_display_model,
         )
         column_display_row.set_selected(
@@ -704,7 +714,7 @@ class WindowRulesPage(BasePage):
         prefs.add(layout_grp)
 
         # ── Visual effects ────────────────────────────────────────────────
-        fx_grp = Adw.PreferencesGroup(title="Visual Effects")
+        fx_grp = Adw.PreferencesGroup(title="Визуальные эффекты")
 
         op_val = 0.0
         if rule:
@@ -713,13 +723,13 @@ class WindowRulesPage(BasePage):
                 op_val = float(op_node.args[0])
         op_adj = Gtk.Adjustment(value=op_val, lower=0.0, upper=1.0, step_increment=0.05)
         op_row = Adw.SpinRow(
-            title="Opacity (0 = unset, 1 = fully opaque)", adjustment=op_adj, digits=2
+            title="Прозрачность (0 = не задано, 1 = полностью непрозрачно)", adjustment=op_adj, digits=2
         )
         fx_grp.add(op_row)
 
         blur_row = Adw.SwitchRow(
-            title="Background Blur",
-            subtitle="Adds background-effect { blur true }",
+            title="Размытие фона",
+            subtitle="Добавляет background-effect { blur true }",
         )
         has_blur = False
         if rule:
@@ -735,7 +745,7 @@ class WindowRulesPage(BasePage):
         prefs.add(fx_grp)
 
         # ── Numeric dimensions ────────────────────────────────────────────
-        dim_grp = Adw.PreferencesGroup(title="Dimensions (0 = unset)")
+        dim_grp = Adw.PreferencesGroup(title="Размеры (0 = не задано)")
         num_rows: dict[str, Adw.SpinRow] = {}
         for key, (label, lo, hi, step, digits) in NUM_ACTION_LABELS.items():
             if key == "opacity":
@@ -754,7 +764,7 @@ class WindowRulesPage(BasePage):
         prefs.add(dim_grp)
 
         # ── Workspace / output ────────────────────────────────────────────
-        place_grp = Adw.PreferencesGroup(title="Placement")
+        place_grp = Adw.PreferencesGroup(title="Размещение")
         str_rows: dict[str, Adw.EntryRow] = {}
         for key, label in STR_ACTION_LABELS.items():
             e = Adw.EntryRow(title=label)
@@ -777,12 +787,12 @@ class WindowRulesPage(BasePage):
         btn_box.set_margin_top(8)
         btn_box.set_margin_bottom(16)
 
-        cancel_btn = Gtk.Button(label="Cancel")
+        cancel_btn = Gtk.Button(label="Отмена")
         cancel_btn.add_css_class("pill")
         cancel_btn.connect("clicked", lambda *_: dialog.close())
         btn_box.append(cancel_btn)
 
-        save_btn = Gtk.Button(label="Save Rule")
+        save_btn = Gtk.Button(label="Сохранить правило")
         save_btn.add_css_class("suggested-action")
         save_btn.add_css_class("pill")
         btn_box.append(save_btn)
@@ -894,8 +904,8 @@ class WindowRulesPage(BasePage):
             return
         rules = self._get_layer_rules()
         new_grp = Adw.PreferencesGroup(
-            title="Layer Rules",
-            description=f"{len(rules)} rule(s) — bars, overlays, wallpapers",
+            title="Правила слоёв",
+            description=f"{len(rules)} правил — панели, оверлеи, обои",
         )
         for i, rule in enumerate(rules):
             new_grp.add(self._make_layer_rule_row(rule, i))
@@ -921,7 +931,7 @@ class WindowRulesPage(BasePage):
         del_btn.set_valign(Gtk.Align.CENTER)
         del_btn.add_css_class("flat")
         del_btn.add_css_class("error")
-        del_btn.set_tooltip_text("Delete layer rule")
+        del_btn.set_tooltip_text("Удалить правило слоя")
         del_btn.connect("clicked", lambda *_, i=idx: self._on_delete_layer(i))
         row.add_suffix(del_btn)
 
@@ -944,33 +954,33 @@ class WindowRulesPage(BasePage):
         self._commit("remove layer rule")
         self._rebuild_layer()
 
-        t = Adw.Toast(title="Layer rule deleted", button_label="Undo", timeout=5)
+        t = Adw.Toast(title="Правило слоя удалено", button_label="Отменить", timeout=5)
         t.connect("button-clicked", lambda *_: self._win._do_undo())
         self._win._toast_overlay.add_toast(t)
 
     def _show_layer_dialog(self, rule: KdlNode | None, idx: int):
-        dialog = Adw.Dialog(title="Layer Rule")
+        dialog = Adw.Dialog(title="Правило слоя")
         dialog.set_content_width(460)
 
         toolbar_view = Adw.ToolbarView()
         hdr = Adw.HeaderBar()
         hdr.set_title_widget(
-            Adw.WindowTitle(title="Edit Layer Rule" if rule else "New Layer Rule")
+            Adw.WindowTitle(title="Редактировать правило слоя" if rule else "Новое правило слоя")
         )
         toolbar_view.add_top_bar(hdr)
 
         prefs = Adw.PreferencesPage()
 
-        match_grp = Adw.PreferencesGroup(title="Match")
+        match_grp = Adw.PreferencesGroup(title="Соответствие")
         match_node = rule.get_child("match") if rule else None
-        ns_entry = Adw.EntryRow(title="Namespace (regex, e.g. ^waybar$)")
+        ns_entry = Adw.EntryRow(title="Namespace (regex, например: ^waybar$)")
         ns_entry.set_text(
             str(match_node.props.get("namespace", "")) if match_node else ""
         )
         match_grp.add(ns_entry)
         prefs.add(match_grp)
 
-        act_grp = Adw.PreferencesGroup(title="Actions")
+        act_grp = Adw.PreferencesGroup(title="Действия")
         bool_rows: dict[str, Adw.SwitchRow] = {}
         for key, label in LAYER_BOOL_ACTION_LABELS.items():
             sr = Adw.SwitchRow(title=label)
@@ -978,7 +988,7 @@ class WindowRulesPage(BasePage):
             act_grp.add(sr)
             bool_rows[key] = sr
 
-        blur_row = Adw.SwitchRow(title="Background Blur")
+        blur_row = Adw.SwitchRow(title="Размытие фона")
         has_blur = False
         if rule:
             be = rule.get_child("background-effect")
@@ -993,7 +1003,7 @@ class WindowRulesPage(BasePage):
             op_node = rule.get_child("opacity")
             if op_node and op_node.args:
                 op_adj.set_value(float(op_node.args[0]))
-        op_row = Adw.SpinRow(title="Opacity (1 = unset)", adjustment=op_adj, digits=2)
+        op_row = Adw.SpinRow(title="Прозрачность (1 = не задано)", adjustment=op_adj, digits=2)
         act_grp.add(op_row)
 
         prefs.add(act_grp)
@@ -1006,12 +1016,12 @@ class WindowRulesPage(BasePage):
         btn_box.set_margin_top(8)
         btn_box.set_margin_bottom(16)
 
-        cancel_btn = Gtk.Button(label="Cancel")
+        cancel_btn = Gtk.Button(label="Отмена")
         cancel_btn.add_css_class("pill")
         cancel_btn.connect("clicked", lambda *_: dialog.close())
         btn_box.append(cancel_btn)
 
-        save_btn = Gtk.Button(label="Save Rule")
+        save_btn = Gtk.Button(label="Сохранить правило")
         save_btn.add_css_class("suggested-action")
         save_btn.add_css_class("pill")
         btn_box.append(save_btn)
