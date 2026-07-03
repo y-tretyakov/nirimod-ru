@@ -1,7 +1,7 @@
 # Maintainer: Your Name <your.email@example.com>
 
 pkgname=nirimod-ru-git
-pkgver=r90.20260703
+pkgver=r91.20260703
 pkgrel=1
 pkgdesc="Russian-translated fork of nirimod - A polished GTK4/libadwaita GUI configurator for the niri Wayland compositor"
 arch=('x86_64')

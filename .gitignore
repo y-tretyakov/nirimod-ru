@@ -1,26 +1,46 @@
 # Python
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
 
 # Virtual Environment
 .venv/
+venv/
+env/
 
 # NiriMod Temporary Files
 *.kdl.bak
 *.kdl.tmp
 
-
 # Scratch / debug scripts
 /test_*.py
 
+# Agent / local planning files
+PROMPT*.md
+.agents/
+.codex/
+
 # Nix
 result
+result-*
 
 # Packaging / build artifacts
-*.egg-info/
-.pytest_cache/
 dist/
 build/
 *.whl
 pkg/
 src/
+
+# Built Arch packages
+*.pkg.tar
+*.pkg.tar.*
+*.pkg.tar.*.sig
+*.src.tar.gz
+
+# Local AUR/build checkout
+nirimod-ru-git/
