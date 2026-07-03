@@ -18,7 +18,7 @@ from nirimod.pages.base import BasePage
 
 class RawConfigPage(BasePage):
     def build(self) -> Gtk.Widget:
-        tb, header, _, content = self._make_toolbar_page("Raw Config")
+        tb, header, _, content = self._make_toolbar_page("Исходный конфиг")
         self._content = content
 
         self._scroll_positions: dict[Path, tuple[float, float]] = {}
@@ -34,7 +34,7 @@ class RawConfigPage(BasePage):
         title_box.set_halign(Gtk.Align.CENTER)
         title_box.set_valign(Gtk.Align.CENTER)
 
-        title_label = Gtk.Label(label="Config File")
+        title_label = Gtk.Label(label="Файл конфига")
         title_label.add_css_class("title")
         title_box.append(title_label)
         title_box.append(self._file_dropdown)
@@ -43,22 +43,22 @@ class RawConfigPage(BasePage):
         title_box.set_margin_start(12)
 
         # Header actions
-        validate_btn = Gtk.Button(label="Validate")
+        validate_btn = Gtk.Button(label="Проверить")
         validate_btn.add_css_class("suggested-action")
         validate_btn.connect("clicked", self._on_validate)
         header.pack_end(validate_btn)
 
-        self._save_btn = Gtk.Button(label="Save")
+        self._save_btn = Gtk.Button(label="Сохранить")
         self._save_btn.add_css_class("suggested-action")
-        self._save_btn.set_tooltip_text("Save this file and reload niri (Ctrl+S)")
+        self._save_btn.set_tooltip_text("Сохранить файл и перезагрузить niri (Ctrl+S)")
         self._save_btn.connect("clicked", self._on_save_raw)
         self._save_btn.set_sensitive(False)
         header.pack_end(self._save_btn)
 
-        self._discard_btn = Gtk.Button(label="Discard")
+        self._discard_btn = Gtk.Button(label="Отбросить")
         self._discard_btn.add_css_class("destructive-action")
         self._discard_btn.add_css_class("flat")
-        self._discard_btn.set_tooltip_text("Discard unsaved changes")
+        self._discard_btn.set_tooltip_text("Отменить несохранённые изменения")
         self._discard_btn.connect("clicked", self._on_discard_raw)
         self._discard_btn.set_sensitive(False)
         header.pack_end(self._discard_btn)
@@ -213,21 +213,21 @@ class RawConfigPage(BasePage):
         try:
             tmp.write_text(text)
         except Exception as e:
-            self.show_toast(f"Write error: {e}", timeout=6)
+            self.show_toast(f"Ошибка записи: {e}", timeout=6)
             return
 
-        self.show_toast("Validating…", timeout=2)
+        self.show_toast("Проверка…", timeout=2)
 
         def _on_validated(result):
             ok, msg = result
             if not ok:
                 tmp.unlink(missing_ok=True)
-                self.show_toast(f"Validation error: {msg[:120]}", timeout=8)
+                self.show_toast(f"Ошибка проверки: {msg[:120]}", timeout=8)
                 return
             try:
                 tmp.replace(path)
             except Exception as e:
-                self.show_toast(f"Save error: {e}", timeout=6)
+                self.show_toast(f"Ошибка сохранения: {e}", timeout=6)
                 return
 
             self._set_modified(False)
@@ -242,9 +242,9 @@ class RawConfigPage(BasePage):
     def _on_reloaded(self, result):
         ok, msg = result
         if ok:
-            self.show_toast("Config saved and applied ✓", timeout=3)
+            self.show_toast("Конфиг сохранён и применён ✓", timeout=3)
         else:
-            self.show_toast(f"Saved, but reload failed: {msg[:80]}", timeout=8)
+            self.show_toast(f"Сохранено, но перезагрузка не удалась: {msg[:80]}", timeout=8)
         self._win.app_state.reload_from_disk()
         self._win._build_search_index()
 
@@ -257,10 +257,10 @@ class RawConfigPage(BasePage):
         from gi.repository import Adw
 
         dialog = Adw.AlertDialog(
-            heading="Discard changes?",
-            body="Your unsaved edits to this file will be lost.",
+            heading="Отбросить изменения?",
+            body="Несохранённые правки будут потеряны.",
         )
-        dialog.add_response("cancel", "Cancel")
+        dialog.add_response("cancel", "Отмена")
         dialog.add_response("discard", "Discard")
         dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE)
         dialog.set_default_response("cancel")
@@ -311,7 +311,7 @@ class RawConfigPage(BasePage):
 
 
     def _on_validate(self, *_):
-        self.show_toast("Validating...")
+        self.show_toast("Проверка...")
 
         def _on_validated(result):
             ok, msg = result

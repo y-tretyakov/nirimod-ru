@@ -16,7 +16,7 @@ from nirimod.startup_entries import make_startup_node, startup_values_from_node
 
 class StartupPage(BasePage):
     def build(self) -> Gtk.Widget:
-        tb, header, _, content = self._make_toolbar_page("Startup Programs")
+        tb, header, _, content = self._make_toolbar_page("Автозапуск")
         self._content = content
 
 
@@ -46,12 +46,12 @@ class StartupPage(BasePage):
 
         if not entries:
             status = Adw.StatusPage(
-                title="No Startup Programs",
-                description="Programs added here will launch automatically when niri starts.",
+                title="Нет программ автозапуска",
+                description="Добавленные программы будут запускаться автоматически при старте niri.",
                 icon_name="applications-system-symbolic",
             )
 
-            add_btn = Gtk.Button(label="Add Program")
+            add_btn = Gtk.Button(label="Добавить программу")
             add_btn.add_css_class("pill")
             add_btn.add_css_class("suggested-action")
             add_btn.set_halign(Gtk.Align.CENTER)
@@ -66,8 +66,8 @@ class StartupPage(BasePage):
             self._content.append(box)
         else:
             grp = Adw.PreferencesGroup(
-                title="Startup Programs",
-                description=f"{len(entries)} program{'s' if len(entries) != 1 else ''} configured to launch",
+                title="Автозапуск",
+                description=f"Настроено {len(entries)} программ",
             )
             for i, entry in enumerate(entries):
                 row = self._make_row(entry, i)
@@ -76,7 +76,7 @@ class StartupPage(BasePage):
             self._content.append(grp)
             
             # Also add a convenient button at the bottom
-            add_btn = Gtk.Button(label="Add Another Program")
+            add_btn = Gtk.Button(label="Добавить ещё программу")
             add_btn.add_css_class("pill")
             add_btn.set_halign(Gtk.Align.CENTER)
             add_btn.set_margin_top(16)
@@ -85,16 +85,16 @@ class StartupPage(BasePage):
 
     def _make_row(self, node: KdlNode, idx: int) -> Adw.ActionRow:
         cmd, is_sh, delay = startup_values_from_node(node)
-        cmd_str = GLib.markup_escape_text(cmd) if cmd else "(empty)"
+        cmd_str = GLib.markup_escape_text(cmd) if cmd else "(пусто)"
         subtitle_parts = []
         if delay > 0:
-            subtitle_parts.append(f"Delay: {delay}s")
+            subtitle_parts.append(f"Задержка: {delay}с")
         subtitle_parts.append(
-            "Via shell (spawn-sh-at-startup)" if is_sh else "Launched directly"
+            "Через оболочку (spawn-sh-at-startup)" if is_sh else "Запуск напрямую"
         )
 
         row = Adw.ActionRow(
-            title=cmd_str or "(empty)",
+            title=cmd_str or "(пусто)",
             subtitle=" | ".join(subtitle_parts),
         )
         row.set_activatable(True)
@@ -104,7 +104,7 @@ class StartupPage(BasePage):
         del_btn.set_valign(Gtk.Align.CENTER)
         del_btn.add_css_class("flat")
         del_btn.add_css_class("error")
-        del_btn.set_tooltip_text("Remove startup entry")
+        del_btn.set_tooltip_text("Удалить запись автозапуска")
         del_btn.connect("clicked", lambda *_, i=idx: self._on_delete(i))
         row.add_suffix(del_btn)
         return row
@@ -126,16 +126,16 @@ class StartupPage(BasePage):
 
     def _show_dialog(self, node: KdlNode | None, idx: int):
         dialog = Adw.AlertDialog(
-            heading="Startup Program", body="Enter the command to launch at startup."
+            heading="Автозапуск", body="Введите команду для запуска при старте."
         )
-        cmd_entry = Adw.EntryRow(title="Command")
-        sh_switch = Adw.SwitchRow(title="Use shell (spawn-sh-at-startup)")
+        cmd_entry = Adw.EntryRow(title="Команда")
+        sh_switch = Adw.SwitchRow(title="Использовать оболочку (spawn-sh-at-startup)")
         delay_adj = Gtk.Adjustment(
             value=0, lower=0, upper=3600, step_increment=1, page_increment=10
         )
         delay_row = Adw.SpinRow(
-            title="Delay",
-            subtitle="Seconds to wait before launching",
+            title="Задержка",
+            subtitle="Секунд до запуска",
             adjustment=delay_adj,
             digits=0,
         )
@@ -153,8 +153,8 @@ class StartupPage(BasePage):
         box.append(grp)
         dialog.set_extra_child(box)
 
-        dialog.add_response("cancel", "Cancel")
-        dialog.add_response("save", "Save")
+        dialog.add_response("cancel", "Отмена")
+        dialog.add_response("save", "Сохранить")
         dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
 
         def _on_resp(d, r):

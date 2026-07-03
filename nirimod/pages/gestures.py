@@ -18,16 +18,16 @@ from nirimod.kdl_parser import (
 from nirimod.pages.base import BasePage
 
 _CORNERS = [
-    ("top-left",     "Top-Left",     "Moves cursor to the top-left corner"),
-    ("top-right",    "Top-Right",    "Moves cursor to the top-right corner"),
-    ("bottom-left",  "Bottom-Left",  "Moves cursor to the bottom-left corner"),
-    ("bottom-right", "Bottom-Right", "Moves cursor to the bottom-right corner"),
+    ("top-left",     "Левый верхний",     "Перемещает курсор в левый верхний угол"),
+    ("top-right",    "Правый верхний",    "Перемещает курсор в правый верхний угол"),
+    ("bottom-left",  "Левый нижний",  "Перемещает курсор в левый нижний угол"),
+    ("bottom-right", "Правый нижний", "Перемещает курсор в правый нижний угол"),
 ]
 
 
 class GesturesPage(BasePage):
     def build(self) -> Gtk.Widget:
-        tb, _, _, content = self._make_toolbar_page("Gestures & Misc")
+        tb, _, _, content = self._make_toolbar_page("Жесты и прочее")
         self._content = content
         self._build_content()
         return tb
@@ -38,8 +38,8 @@ class GesturesPage(BasePage):
 
         # ── Hot Corners ───────────────────────────────────────────────────────
         hc_grp = Adw.PreferencesGroup(
-            title="Hot Corners",
-            description="Trigger the overview when the cursor touches a screen corner (niri ≥ 25.05)",
+            title="Горячие углы",
+            description="Открывать обзор при касании угла экрана (niri ≥ 25.05)",
         )
         gestures_node = next((n for n in nodes if n.name == "gestures"), None)
         hc_node = gestures_node.get_child("hot-corners") if gestures_node else None
@@ -55,8 +55,8 @@ class GesturesPage(BasePage):
 
         # ExpanderRow = the enable/disable switch + collapsible corner list
         hc_expander = Adw.ExpanderRow(
-            title="Enable Hot Corners",
-            subtitle="Expand to choose which corners are active (default: top-left)",
+            title="Горячие углы",
+            subtitle="Разверните, чтобы выбрать активные углы (по умолчанию: левый верхний)",
         )
         hc_expander.set_expanded(hc_enabled)
         hc_expander.set_show_enable_switch(True)
@@ -91,15 +91,15 @@ class GesturesPage(BasePage):
 
 
         # ── Hotkey Overlay ────────────────────────────────────────────────────
-        hko_grp = Adw.PreferencesGroup(title="Hotkey Overlay")
+        hko_grp = Adw.PreferencesGroup(title="Оверлей клавиш")
         hko_node = next((n for n in nodes if n.name == "hotkey-overlay"), None)
 
         skip_initial = (
             hko_node is not None and hko_node.get_child("skip-at-startup") is not None
         )
         skip_row = Adw.SwitchRow(
-            title="Skip at Startup",
-            subtitle="Don't show the hotkey overlay when niri starts",
+            title="Пропускать при запуске",
+            subtitle="Не показывать оверлей при запуске niri",
         )
         skip_row.set_active(skip_initial)
         safe_switch_connect(skip_row, skip_initial, self._set_skip_hotkey_overlay)
@@ -108,13 +108,13 @@ class GesturesPage(BasePage):
 
         # ── Screenshots ───────────────────────────────────────────────────────
         ss_grp = Adw.PreferencesGroup(
-            title="Screenshots", description="Path template for saved screenshots"
+            title="Скриншоты", description="Шаблон пути для скриншотов"
         )
         cur_path = next(
             (n.args[0] for n in nodes if n.name == "screenshot-path" and n.args),
             "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png",
         )
-        path_row = Adw.EntryRow(title="Save Path (strftime format)")
+        path_row = Adw.EntryRow(title="Путь сохранения (формат strftime)")
         path_row.set_text(str(cur_path))
         path_row.set_show_apply_button(True)
         path_row.connect("apply", lambda r: self._set_screenshot_path(r.get_text()))
@@ -122,7 +122,7 @@ class GesturesPage(BasePage):
         content.append(ss_grp)
 
         # ── Overview ──────────────────────────────────────────────────────────
-        ov_grp = Adw.PreferencesGroup(title="Overview")
+        ov_grp = Adw.PreferencesGroup(title="Обзор")
         ov_node = next((n for n in nodes if n.name == "overview"), None)
         ws_shadow_node = ov_node.get_child("workspace-shadow") if ov_node else None
 
@@ -130,8 +130,8 @@ class GesturesPage(BasePage):
             ws_shadow_node is None or ws_shadow_node.get_child("off") is None
         )
         ws_shadow_row = Adw.SwitchRow(
-            title="Workspace Shadow in Overview",
-            subtitle="Show drop shadows under workspaces in overview mode",
+            title="Тень workspace в обзоре",
+            subtitle="Показывать тени под workspace в режиме обзора",
         )
         ws_shadow_row.set_active(ws_shadow_initial)
         safe_switch_connect(

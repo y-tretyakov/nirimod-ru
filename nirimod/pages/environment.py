@@ -15,7 +15,7 @@ from nirimod.pages.base import BasePage
 
 class EnvironmentPage(BasePage):
     def build(self) -> Gtk.Widget:
-        tb, header, _, content = self._make_toolbar_page("Environment")
+        tb, header, _, content = self._make_toolbar_page("Окружение")
         self._content = content
 
         # Add button has been moved to the page body for better visibility
@@ -41,12 +41,12 @@ class EnvironmentPage(BasePage):
 
         if not entries:
             status = Adw.StatusPage(
-                title="No Environment Variables",
-                description="Variables set here will apply to niri and all processes it spawns.",
+                title="Нет переменных окружения",
+                description="Переменные применяются к niri и всем его процессам.",
                 icon_name="preferences-system-symbolic",
             )
 
-            add_btn = Gtk.Button(label="Add Variable")
+            add_btn = Gtk.Button(label="Добавить переменную")
             add_btn.add_css_class("pill")
             add_btn.add_css_class("suggested-action")
             add_btn.set_halign(Gtk.Align.CENTER)
@@ -61,8 +61,8 @@ class EnvironmentPage(BasePage):
             self._content.append(box)
         else:
             grp = Adw.PreferencesGroup(
-                title="Environment Variables",
-                description=f"{len(entries)} variable{'s' if len(entries) != 1 else ''} configured",
+                title="Переменные окружения",
+                description=f"Настроено {len(entries)} переменных",
             )
             for i, child in enumerate(entries):
                 row = self._make_row(child, i)
@@ -71,7 +71,7 @@ class EnvironmentPage(BasePage):
             self._content.append(grp)
             
             # Convenient button at the bottom
-            add_btn = Gtk.Button(label="Add Another Variable")
+            add_btn = Gtk.Button(label="Добавить ещё переменную")
             add_btn.add_css_class("pill")
             add_btn.set_halign(Gtk.Align.CENTER)
             add_btn.set_margin_top(16)
@@ -88,7 +88,7 @@ class EnvironmentPage(BasePage):
         
         row = Adw.ActionRow(
             title=f"<b>{key_str}</b>",
-            subtitle=val_str if val_str else "(empty)",
+            subtitle=val_str if val_str else "(пусто)",
         )
         row.set_use_markup(True)
         edit_btn = Gtk.Button(icon_name="document-edit-symbolic")
@@ -122,11 +122,11 @@ class EnvironmentPage(BasePage):
 
     def _show_dialog(self, node: KdlNode | None, idx: int):
         dialog = Adw.AlertDialog(
-            heading="Environment Variable", body="Set a key=value environment variable."
+            heading="Переменная окружения", body="Установите переменную окружения key=value."
         )
 
-        key_entry = Adw.EntryRow(title="Variable Name (e.g. QT_QPA_PLATFORM)")
-        val_entry = Adw.EntryRow(title="Value (e.g. wayland)")
+        key_entry = Adw.EntryRow(title="Имя переменной (например: QT_QPA_PLATFORM)")
+        val_entry = Adw.EntryRow(title="Значение (например: wayland)")
         if node:
             key_entry.set_text(node.name)
             key_entry.set_editable(False)  # editing key means replacing the node
@@ -137,8 +137,8 @@ class EnvironmentPage(BasePage):
         grp.add(val_entry)
         dialog.set_extra_child(grp)
 
-        dialog.add_response("cancel", "Cancel")
-        dialog.add_response("save", "Save")
+        dialog.add_response("cancel", "Отмена")
+        dialog.add_response("save", "Сохранить")
         dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
 
         def _on_resp(d, r):

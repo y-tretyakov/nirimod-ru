@@ -4,11 +4,11 @@ from __future__ import annotations
 
 
 COLUMN_DISPLAY_OPTIONS = [
-    ("Normal", "normal"),
-    ("Tabbed", "tabbed"),
+    ("Обычный", "normal"),
+    ("Вкладки", "tabbed"),
 ]
 COLUMN_DISPLAY_LABELS = [label for label, _ in COLUMN_DISPLAY_OPTIONS]
-COLUMN_DISPLAY_RULE_LABELS = ["Use Layout Default", *COLUMN_DISPLAY_LABELS]
+COLUMN_DISPLAY_RULE_LABELS = ["По умолчанию", *COLUMN_DISPLAY_LABELS]
 
 
 def normalize_column_display(value) -> str | None:
