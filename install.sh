@@ -7,7 +7,7 @@ INSTALL_DIR="$HOME/.local/share/nirimod"
 BIN_DIR="$HOME/.local/bin"
 DESKTOP_FILE_DIR="$HOME/.local/share/applications"
 ICON_DIR="$HOME/.local/share/icons/hicolor/scalable/apps"
-REPO_URL="https://github.com/srinivasr/nirimod"
+REPO_URL="https://github.com/y-tretyakov/nirimod-ru"
 
 DISTRO=""
 DISTRO_PRETTY=""

@@ -8,7 +8,7 @@ import threading
 import urllib.request
 import stat
 
-API_URL = "https://api.github.com/repos/srinivasr/nirimod/commits/main"
+API_URL = "https://api.github.com/repos/y-tretyakov/nirimod-ru/commits/main"
 INSTALL_DIR = os.path.expanduser("~/.local/share/nirimod")
 FALLBACK_TERMINALS = [
     "xdg-terminal-exec",
@@ -111,7 +111,7 @@ def launch_updater_in_terminal():
 
     script_content = """#!/usr/bin/env bash
 echo "Запуск обновления NiriMod..."
-curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | bash -s -- --install
+curl -sSL https://raw.githubusercontent.com/y-tretyakov/nirimod-ru/main/install.sh | bash -s -- --install
 echo ""
 echo "Обновление завершено! Нажмите Enter для закрытия окна."
 read

@@ -15,3 +15,12 @@ __pycache__/
 
 # Nix
 result
+
+# Packaging / build artifacts
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+*.whl
+pkg/
+src/

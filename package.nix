@@ -54,8 +54,8 @@ python3Packages.buildPythonApplication (finalAttrs: {
     [Desktop Entry]
     Version=1.0
     Name=NiriMod
-    GenericName=Compositor Settings
-    Comment=GUI Configuration Manager for the Niri Wayland Compositor
+    GenericName=Настройки композитора
+    Comment=Графический менеджер настроек для Wayland композитора Niri
     Exec=nirimod
     Icon=nirimod
     Terminal=false
@@ -69,7 +69,7 @@ python3Packages.buildPythonApplication (finalAttrs: {
 
   meta = {
     description = "A polished GTK4/libadwaita GUI configurator for the niri Wayland compositor";
-    homepage = "https://github.com/srinivasr/nirimod";
+    homepage = "https://github.com/y-tretyakov/nirimod-ru";
     license = lib.licenses.mit;
     maintainers = [ ];
     mainProgram = "nirimod";

@@ -55,19 +55,33 @@ NiriMod поддерживает продвинутые многофайловы
 
 ## Установка
 
-### AUR (Arch Linux)
+### CachyOS / Arch Linux (рекомендуется)
+
+Установите из AUR любым удобным AUR-помощником:
+
+<details>
+<summary><b>yay</b></summary>
 
 ```bash
-yay -S nirimod-git
+yay -S nirimod-ru-git
 ```
+</details>
 
-### Скрипт (остальные дистрибутивы)
+<details>
+<summary><b>paru</b></summary>
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | bash
+paru -S nirimod-ru-git
+```
+</details>
+
+### Остальные дистрибутивы Linux
+
+```bash
+curl -sSL https://raw.githubusercontent.com/y-tretyakov/nirimod-ru/main/install.sh | bash
 ```
 
-*(Вы можете использовать `--install` чтобы пропустить запросы, `--uninstall` для удаления приложения, или `--skip-deps` если предпочитаете устанавливать зависимости вручную).*
+*(Флаги: `--install` для установки без запросов, `--uninstall` для удаления, `--skip-deps` для пропуска установки зависимостей).*
 
 ---
 
@@ -81,8 +95,58 @@ NiriMod работает из коробки на Arch, Fedora, openSUSE и Debi
 **Пользователи Gentoo** (требуется [оверлей GURU](https://wiki.gentoo.org/wiki/Project:GURU) для `niri`):
 ```bash
 emerge dev-vcs/git net-misc/curl dev-lang/python gui-libs/gtk gui-libs/libadwaita dev-python/pygobject dev-python/pycairo x11-libs/libxkbcommon x11-misc/xkeyboard-config
-curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | bash -s -- --install --skip-deps
+curl -sSL https://raw.githubusercontent.com/y-tretyakov/nirimod-ru/main/install.sh | bash -s -- --install --skip-deps
 ```
+
+---
+
+## Обновление
+
+### AUR
+Просто выполните обновление системы как обычно:
+```bash
+yay -Syu          # или paru -Syu
+```
+
+### install.sh
+Повторно запустите скрипт установки:
+```bash
+curl -sSL https://raw.githubusercontent.com/y-tretyakov/nirimod-ru/main/install.sh | bash
+```
+
+## Удаление
+
+### AUR
+```bash
+yay -Rns nirimod-ru-git    # или paru -Rns nirimod-ru-git
+```
+
+### install.sh
+```bash
+curl -sSL https://raw.githubusercontent.com/y-tretyakov/nirimod-ru/main/install.sh | bash -s -- --uninstall
+```
+
+## Сборка из исходников
+
+```bash
+git clone https://github.com/y-tretyakov/nirimod-ru.git
+cd nirimod-ru
+uv sync
+uv run nirimod
+```
+
+Требуется Python 3.12+, установленные системные зависимости GTK4/libadwaita/PyGObject и запущенный композитор niri.
+
+## Часто задаваемые вопросы (FAQ)
+
+### Чем отличается русская версия (nirimod-ru) от оригинальной (nirimod)?
+Русская версия — это полный перевод интерфейса NiriMod на русский язык. Весь функционал идентичен оригиналу.
+
+### Могу ли я использовать nirimod-ru вместе с оригинальным nirimod?
+Нет, пакеты конфликтуют. Установите только один из них.
+
+### Как обновлять перевод?
+Переводы обновляются вместе с новыми версиями. Просто обновите пакет через ваш пакетный менеджер.
 
 ---
 
@@ -90,11 +154,11 @@ curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | 
 
 Вклад всегда приветствуется. Если вы хотите помочь, ознакомьтесь с инструкциями по настройке в файле [CONTRIBUTING.md](CONTRIBUTING.md). Если вы планируете серьёзные изменения, пожалуйста, сначала откройте issue, чтобы мы могли их обсудить.
 
-<a href="https://www.star-history.com/?repos=srinivasr%2Fnirimod&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=y-tretyakov%2Fnirimod-ru&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=srinivasr/nirimod&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=srinivasr/nirimod&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=srinivasr/nirimod&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=y-tretyakov/nirimod-ru&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=y-tretyakov/nirimod-ru&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=y-tretyakov/nirimod-ru&type=date&legend=top-left" />
  </picture>
 </a>
 

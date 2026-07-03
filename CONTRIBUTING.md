@@ -13,7 +13,7 @@ libcairo2-dev libgirepository-2.0-dev libgtk-4-dev libadwaita-1-dev
 Then:
 
 ```bash
-git clone https://github.com/srinivasr/nirimod.git
+git clone https://github.com/y-tretyakov/nirimod-ru.git
 cd nirimod
 uv sync
 uv run nirimod
@@ -47,7 +47,7 @@ All checks must pass before your PR can be merged.
 
 ## Reporting bugs
 
-Open a [GitHub issue](https://github.com/srinivasr/nirimod/issues) and include:
+Open a [GitHub issue](https://github.com/y-tretyakov/nirimod-ru/issues) and include:
 
 - Niri version (`niri --version`)
 - Steps to reproduce
