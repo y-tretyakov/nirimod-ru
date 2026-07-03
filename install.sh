@@ -505,8 +505,8 @@ EOF
 [Desktop Entry]
 Version=1.0
 Name=NiriMod
-GenericName=Compositor Settings
-Comment=GUI Configuration Manager for the Niri Wayland Compositor
+GenericName=Настройки композитора
+Comment=Графический менеджер настроек для Wayland композитора Niri
 Exec=${BIN_DIR}/nirimod
 Icon=${ICON_NAME}
 Terminal=false

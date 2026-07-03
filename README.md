@@ -1,7 +1,7 @@
 <div align="center">
   <h1>NiriMod</h1>
   
-  **A GTK4/libadwaita config manager for the [niri](https://github.com/niri-wm/niri) Wayland compositor.**
+  **GTK4/libadwaita менеджер настроек для Wayland композитора [niri](https://github.com/niri-wm/niri).**
 
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
   [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-blue?logo=python&logoColor=white)](https://python.org)
@@ -13,47 +13,47 @@
 
 ![NiriMod Interface](media/1.png)
 
-Editing Niri's configuration file by hand works perfectly fine—until you find yourself tweaking animation curves blindly, guessing the exact names of your monitors, or accidentally overlapping your keybinds. NiriMod steps in to provide a clean, native GUI for the tedious parts of configuration, while staying completely out of the way for everything else.
+Редактировать файл конфигурации Niri вручную вполне нормально — пока вы не начинаете вслепую подбирать кривые анимации, гадать точные названия мониторов или случайно создавать пересекающиеся сочетания клавиш. NiriMod предоставляет чистый нативный графический интерфейс для утомительных частей настройки, при этом совершенно не мешая вам во всём остальном.
 
 ---
 
-## What It Does
+## Возможности
 
-NiriMod manages your Niri config via a clean interface, allowing you to easily adjust settings while leaving your custom scripts and comments alone.
+NiriMod управляет вашей конфигурацией Niri через понятный интерфейс, позволяя легко настраивать параметры, не трогая ваши скрипты и комментарии.
 
-- **Display Outputs:** Visually arrange your monitors using drag-and-drop. Easily adjust your resolution, refresh rate, variable refresh rate (VRR), and fractional scaling without diving into the config file.
-- **Keybinds:** Manage your shortcuts through an interactive physical keyboard map that lights up bound keys, or use the searchable list view to quickly find and edit specific bindings.
-- **Layout & Rules:** Take control of Niri's column layout with a full editor for window rules, column proportions, gaps, struts, and workspaces.
-- **System & Input:** Adjust your mouse and touchpad settings, configure swipe gestures, change cursor themes, and manage the environment variables and startup commands Niri uses.
-- **Animations:** Stop guessing cubic-bezier values. The visual easing curve editor provides live previews for all of Niri's animation slots (like window open/close or workspace switches).
-- **Raw Config Editor:** Sometimes you just want to type. The built-in KDL text editor comes with undo/redo functionality and runs live validation to ensure your manual tweaks are safe.
+- **Мониторы:** Визуально располагайте мониторы с помощью перетаскивания. Легко настраивайте разрешение, частоту обновления, переменную частоту обновления (VRR) и дробное масштабирование без погружения в файл конфигурации.
+- **Сочетания клавиш:** Управляйте своими комбинациями с помощью интерактивной карты физической клавиатуры с подсветкой назначенных клавиш или используйте список с поиском для быстрого поиска и редактирования конкретных привязок.
+- **Раскладка и правила:** Контролируйте колоночную раскладку Niri с помощью полноценного редактора правил окон, пропорций колонок, отступов, struts и workspace.
+- **Система и ввод:** Настройте параметры мыши и тачпада, настройте жесты смахивания, смените тему курсора, а также управляйте переменными окружения и командами автозапуска Niri.
+- **Анимации:** Перестаньте гадать значения cubic-bezier. Визуальный редактор кривых easing предоставляет предпросмотр для всех слотов анимации Niri (например, открытие/закрытие окон или переключение workspace).
+- **Редактор сырой конфигурации:** Иногда хочется просто печатать. Встроенный текстовый редактор KDL поддерживает отмену/повтор и выполняет проверку в реальном времени, чтобы ваши ручные правки были безопасными.
 
 ![Keybinding Management](media/2.png)
 
 ---
 
-## Safe, Non-Destructive Editing
+## Безопасное, неразрушающее редактирование
 
-We built NiriMod to be strictly non-destructive. It is designed to never break your existing configuration:
+Мы создали NiriMod строго неразрушающим. Он спроектирован так, чтобы никогда не ломать вашу существующую конфигурацию:
 
-- **Strict Validation:** Before anything is written to disk, NiriMod runs `niri validate`. If the validation fails, nothing is saved, keeping your setup safe.
-- **Atomic Writes:** Configuration files are saved using temporary files first, which prevents corruption if a save is interrupted.
-- **Comment Preservation:** Your custom comments and whitespace formatting are kept completely intact. We don't overwrite your personal notes.
-- **Profile Management:** Easily save and switch between full configuration snapshots (like a "work" profile and a "gaming" profile) with a single click.
+- **Строгая проверка:** Перед записью чего-либо на диск NiriMod запускает `niri validate`. Если проверка не проходит, ничего не сохраняется — ваша настройка в безопасности.
+- **Атомарная запись:** Файлы конфигурации сначала сохраняются во временные файлы, что предотвращает повреждение при прерывании сохранения.
+- **Сохранение комментариев:** Ваши комментарии и форматирование пробелов остаются полностью нетронутыми. Мы не перезаписываем ваши личные заметки.
+- **Управление профилями:** Легко сохраняйте и переключайтесь между полными снимками конфигурации (например, профиль для работы и для игр) одним кликом.
 
-### Third-Party Shells & Multi-File Configs
+### Сторонние оболочки и многофайловые конфигурации
 
-![Multi-File Configurations](media/multiple_configs.png)
+![Многофайловые конфигурации](media/multiple_configs.png)
 
-NiriMod natively supports advanced, multi-file setups. This includes custom visual layers and desktop shells like **Dank Material Shell (DMS)** and **Noctalia**. 
+NiriMod поддерживает продвинутые многофайловые конфигурации. Это включает пользовательские визуальные слои и оболочки рабочего стола, такие как **Dank Material Shell (DMS)** и **Noctalia**.
 
-If you like to split your configuration using `include` directives, NiriMod handles that transparently. It can parse included files up to 5 levels deep. When you make a change in the user interface, NiriMod is smart enough to track which file that specific setting came from, and it saves the change back to its exact origin. 
+Если вы предпочитаете разделять конфигурацию с помощью директив `include`, NiriMod обрабатывает их прозрачно. Он может анализировать включаемые файлы глубиной до 5 уровней. Когда вы вносите изменения в пользовательском интерфейсе, NiriMod достаточно умён, чтобы отследить, из какого файла пришёл конкретный параметр, и сохраняет изменение обратно в его исходное расположение.
 
-Because NiriMod only touches the standard Niri settings it understands, your custom shell configurations, advanced scripts, and unrecognized blocks are perfectly preserved just the way you left them.
+Поскольку NiriMod затрагивает только стандартные настройки Niri, которые он понимает, ваши пользовательские конфигурации оболочек, продвинутые скрипты и нераспознанные блоки прекрасно сохраняются в том виде, в котором вы их оставили.
 
 ---
 
-## Installation
+## Установка
 
 ### AUR (Arch Linux)
 
@@ -61,24 +61,24 @@ Because NiriMod only touches the standard Niri settings it understands, your cus
 yay -S nirimod-git
 ```
 
-### Script (Other Distros)
+### Скрипт (остальные дистрибутивы)
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | bash
 ```
 
-*(You can use `--install` to skip the prompts, `--uninstall` to remove the application, or `--skip-deps` if you prefer to handle dependencies manually).*
+*(Вы можете использовать `--install` чтобы пропустить запросы, `--uninstall` для удаления приложения, или `--skip-deps` если предпочитаете устанавливать зависимости вручную).*
 
 ---
 
-## Requirements
+## Требования
 
-NiriMod works out of the box on Arch, Fedora, openSUSE, and Debian/Ubuntu. You will need:
-- Python 3.12+ and `uv` (the install script handles `uv` for you)
-- GTK4, libadwaita, PyGObject, and Pycairo
-- The niri Wayland compositor
+NiriMod работает из коробки на Arch, Fedora, openSUSE и Debian/Ubuntu. Вам понадобятся:
+- Python 3.12+ и `uv` (скрипт установки настроит `uv` за вас)
+- GTK4, libadwaita, PyGObject и Pycairo
+- Wayland композитор niri
 
-**Gentoo Users** (requires the [GURU overlay](https://wiki.gentoo.org/wiki/Project:GURU) for `niri`):
+**Пользователи Gentoo** (требуется [оверлей GURU](https://wiki.gentoo.org/wiki/Project:GURU) для `niri`):
 ```bash
 emerge dev-vcs/git net-misc/curl dev-lang/python gui-libs/gtk gui-libs/libadwaita dev-python/pygobject dev-python/pycairo x11-libs/libxkbcommon x11-misc/xkeyboard-config
 curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | bash -s -- --install --skip-deps
@@ -86,9 +86,9 @@ curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | 
 
 ---
 
-## Contributing
+## Участие в разработке
 
-Contributions are always welcome. If you would like to help out, please check the [CONTRIBUTING.md](CONTRIBUTING.md) file for setup instructions. If you are planning a major change, please open an issue first so we can discuss it.
+Вклад всегда приветствуется. Если вы хотите помочь, ознакомьтесь с инструкциями по настройке в файле [CONTRIBUTING.md](CONTRIBUTING.md). Если вы планируете серьёзные изменения, пожалуйста, сначала откройте issue, чтобы мы могли их обсудить.
 
 <a href="https://www.star-history.com/?repos=srinivasr%2Fnirimod&type=date&legend=top-left">
  <picture>
@@ -100,4 +100,4 @@ Contributions are always welcome. If you would like to help out, please check th
 
 ---
 
-*NiriMod is an independent project and is not affiliated with the official niri team.*
+*NiriMod — это независимый проект, не связанный с официальной командой niri.*
