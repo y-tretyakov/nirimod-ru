@@ -27,12 +27,12 @@ def make_toolbar_page(
     # Hamburger menu on the content header (appears next to window close button)
     if window is not None:
         menu = Gio.Menu()
-        menu.append("Profiles", "win.open_profiles")
-        menu.append("Preferences", "win.open_preferences")
-        menu.append("Restore Backup...", "win.reset_config")
+        menu.append("Профили", "win.open_profiles")
+        menu.append("Настройки", "win.open_preferences")
+        menu.append("Восстановить из резервной копии...", "win.reset_config")
 
         kofi_section = Gio.Menu()
-        kofi_section.append("Support on Ko-fi ☕", "win.open_kofi")
+        kofi_section.append("Поддержать на Ko-fi ☕", "win.open_kofi")
         menu.append_section(None, kofi_section)
 
         menu_btn = Gtk.MenuButton(icon_name="open-menu-symbolic")
