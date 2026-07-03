@@ -25,7 +25,7 @@ CLICK_METHODS = ["button-areas", "clickfinger"]
 
 class InputPage(BasePage):
     def build(self) -> Gtk.Widget:
-        tb, _, _, content = self._make_toolbar_page("Input")
+        tb, _, _, content = self._make_toolbar_page("Ввод")
         self._content = content
         self._build_content()
         return tb
@@ -34,18 +34,18 @@ class InputPage(BasePage):
         content = self._content
         nodes = self._nodes
 
-        kb_expander = Adw.ExpanderRow(title="Keyboard", subtitle="XKB options &amp; key repeat")
+        kb_expander = Adw.ExpanderRow(title="Клавиатура", subtitle="Параметры XKB и повтор клавиш")
         kb_expander.add_css_class("nm-expander")
 
         kb_node = find_or_create(nodes, "input", "keyboard")
         xkb_node = kb_node.get_child("xkb") or KdlNode("xkb")
 
         fields = [
-            ("layout", "Layout", "e.g. us,ru"),
-            ("variant", "Variant", "e.g. dvorak"),
-            ("model", "Model", ""),
-            ("options", "Options", "e.g. grp:win_space_toggle"),
-            ("rules", "Rules", ""),
+            ("layout", "Раскладка", "например: us,ru"),
+            ("variant", "Вариант", "например: dvorak"),
+            ("model", "Модель", ""),
+            ("options", "Параметры", "например: grp:win_space_toggle"),
+            ("rules", "Правила", ""),
         ]
         self._xkb_entries: dict[str, Adw.EntryRow] = {}
         for key, title, ph in fields:
@@ -63,7 +63,7 @@ class InputPage(BasePage):
             value=kb_node.child_arg("repeat-delay") or 600,
             lower=100, upper=3000, step_increment=50,
         )
-        delay_row = Adw.SpinRow(title="Repeat Delay (ms)", adjustment=delay_adj, digits=0)
+        delay_row = Adw.SpinRow(title="Задержка повтора (мс)", adjustment=delay_adj, digits=0)
         delay_row.connect("notify::value", lambda r, _: self._set_kb("repeat-delay", int(r.get_value())))
         kb_expander.add_row(delay_row)
 
@@ -71,11 +71,11 @@ class InputPage(BasePage):
             value=kb_node.child_arg("repeat-rate") or 25,
             lower=1, upper=200, step_increment=1,
         )
-        rate_row = Adw.SpinRow(title="Repeat Rate (keys/sec)", adjustment=rate_adj, digits=0)
+        rate_row = Adw.SpinRow(title="Скорость повтора (кл/с)", adjustment=rate_adj, digits=0)
         rate_row.connect("notify::value", lambda r, _: self._set_kb("repeat-rate", int(r.get_value())))
         kb_expander.add_row(rate_row)
 
-        numlock_row = Adw.SwitchRow(title="Enable Num Lock on Startup")
+        numlock_row = Adw.SwitchRow(title="Включить Num Lock при запуске")
         nl_init = kb_node.get_child("numlock") is not None
         numlock_row.set_active(nl_init)
         safe_switch_connect(numlock_row, nl_init, self._toggle_numlock)
@@ -86,10 +86,10 @@ class InputPage(BasePage):
         content.append(kb_grp)
 
         # focus / pointer
-        focus_grp = Adw.PreferencesGroup(title="Pointer Behavior")
+        focus_grp = Adw.PreferencesGroup(title="Поведение указателя")
         input_node = find_or_create(nodes, "input")
 
-        ffm_row = Adw.SwitchRow(title="Focus Follows Mouse")
+        ffm_row = Adw.SwitchRow(title="Фокус при наведении мыши")
         ffm_node = input_node.get_child("focus-follows-mouse")
         ffm_row._last_active = ffm_node is not None
         ffm_row.set_active(ffm_node is not None)
@@ -114,7 +114,7 @@ class InputPage(BasePage):
         self._last_scroll_val = scroll_val
         scroll_adj = Gtk.Adjustment(value=scroll_val, lower=0, upper=100, step_increment=1)
         scroll_pct_row = Adw.SpinRow(
-            title="Max Scroll Amount (%)", subtitle="0% = only fully visible windows",
+            title="Макс. прокрутка (%)", subtitle="0% = только полностью видимые окна",
             adjustment=scroll_adj, digits=0,
         )
         scroll_pct_row.set_sensitive(ffm_node is not None)
@@ -131,7 +131,7 @@ class InputPage(BasePage):
         focus_grp.add(scroll_pct_row)
 
         warp_init = input_node.get_child("warp-mouse-to-focus") is not None
-        warp_row = Adw.SwitchRow(title="Warp Mouse to Focus")
+        warp_row = Adw.SwitchRow(title="Перемещать мышь к фокусу")
         warp_row.set_active(warp_init)
         safe_switch_connect(warp_row, warp_init,
             lambda enabled: self._toggle_input_flag("warp-mouse-to-focus", enabled))
@@ -139,11 +139,11 @@ class InputPage(BasePage):
         content.append(focus_grp)
 
         # touchpad
-        tp_expander = Adw.ExpanderRow(title="Touchpad")
+        tp_expander = Adw.ExpanderRow(title="Тачпад")
         tp_expander.add_css_class("nm-expander")
         has_tp = niri_ipc.has_touchpad()
         if not has_tp:
-            tp_expander.set_subtitle("No touchpad detected")
+            tp_expander.set_subtitle("Тачпад не обнаружен")
             tp_expander.set_sensitive(False)
 
         tp_node = find_or_create(nodes, "input", "touchpad")
@@ -166,22 +166,22 @@ class InputPage(BasePage):
             safe_switch_connect(r, ini, lambda enabled, k=key: self._set_tp(k, enabled))
             return r
 
-        tp_expander.add_row(tp_switch("tap", "Tap to Click"))
-        tp_expander.add_row(tp_switch("dwt", "Disable While Typing"))
-        tp_expander.add_row(tp_switch("dwtp", "Disable While Trackpointing"))
-        tp_expander.add_row(tp_switch("natural-scroll", "Natural Scroll"))
-        tp_expander.add_row(tp_bool_switch("drag", "Tap Drag"))
-        tp_expander.add_row(tp_switch("drag-lock", "Tap Drag Lock"))
-        tp_expander.add_row(tp_switch("disabled-on-external-mouse", "Disable on External Mouse"))
+        tp_expander.add_row(tp_switch("tap", "Касание для клика"))
+        tp_expander.add_row(tp_switch("dwt", "Отключать при наборе текста"))
+        tp_expander.add_row(tp_switch("dwtp", "Отключать при использовании трекпоинта"))
+        tp_expander.add_row(tp_switch("natural-scroll", "Естественная прокрутка"))
+        tp_expander.add_row(tp_bool_switch("drag", "Перетаскивание касанием"))
+        tp_expander.add_row(tp_switch("drag-lock", "Блокировка перетаскивания"))
+        tp_expander.add_row(tp_switch("disabled-on-external-mouse", "Отключать при внешней мыши"))
 
         spd_adj = Gtk.Adjustment(value=float(tp_node.child_arg("accel-speed") or 0.0),
             lower=-1.0, upper=1.0, step_increment=0.05)
-        spd_row = Adw.SpinRow(title="Accel Speed", adjustment=spd_adj, digits=2)
+        spd_row = Adw.SpinRow(title="Скорость ускорения", adjustment=spd_adj, digits=2)
         spd_row.connect("notify::value", lambda r, _: self._set_tp("accel-speed", r.get_value()))
         tp_expander.add_row(spd_row)
 
         ap_model = Gtk.StringList.new(ACCEL_PROFILES)
-        ap_row = Adw.ComboRow(title="Accel Profile", model=ap_model)
+        ap_row = Adw.ComboRow(title="Профиль ускорения", model=ap_model)
         cur_ap = tp_node.child_arg("accel-profile") or "default"
         if cur_ap in ACCEL_PROFILES:
             ap_row.set_selected(ACCEL_PROFILES.index(cur_ap))
@@ -190,7 +190,7 @@ class InputPage(BasePage):
         tp_expander.add_row(ap_row)
 
         sm_model = Gtk.StringList.new(SCROLL_METHODS_TP)
-        sm_row = Adw.ComboRow(title="Scroll Method", model=sm_model)
+        sm_row = Adw.ComboRow(title="Способ прокрутки", model=sm_model)
         cur_sm = tp_node.child_arg("scroll-method") or "two-finger"
         if cur_sm in SCROLL_METHODS_TP:
             sm_row.set_selected(SCROLL_METHODS_TP.index(cur_sm))
@@ -199,7 +199,7 @@ class InputPage(BasePage):
         tp_expander.add_row(sm_row)
 
         cm_model = Gtk.StringList.new(CLICK_METHODS)
-        cm_row = Adw.ComboRow(title="Click Method", model=cm_model)
+        cm_row = Adw.ComboRow(title="Способ клика", model=cm_model)
         cur_cm = tp_node.child_arg("click-method") or "button-areas"
         if cur_cm in CLICK_METHODS:
             cm_row.set_selected(CLICK_METHODS.index(cur_cm))
@@ -212,11 +212,11 @@ class InputPage(BasePage):
         content.append(tp_grp)
 
         # mouse
-        m_expander = Adw.ExpanderRow(title="Mouse")
+        m_expander = Adw.ExpanderRow(title="Мышь")
         m_expander.add_css_class("nm-expander")
         m_node = find_or_create(nodes, "input", "mouse")
 
-        m_nat = Adw.SwitchRow(title="Natural Scroll")
+        m_nat = Adw.SwitchRow(title="Естественная прокрутка")
         mn_init = m_node.get_child("natural-scroll") is not None
         m_nat.set_active(mn_init)
         safe_switch_connect(m_nat, mn_init, lambda enabled: self._set_m_flag("natural-scroll", enabled))
@@ -224,12 +224,12 @@ class InputPage(BasePage):
 
         m_spd_adj = Gtk.Adjustment(value=float(m_node.child_arg("accel-speed") or 0.0),
             lower=-1.0, upper=1.0, step_increment=0.05)
-        m_spd_row = Adw.SpinRow(title="Accel Speed", adjustment=m_spd_adj, digits=2)
+        m_spd_row = Adw.SpinRow(title="Скорость ускорения", adjustment=m_spd_adj, digits=2)
         m_spd_row.connect("notify::value", lambda r, _: self._set_m("accel-speed", r.get_value()))
         m_expander.add_row(m_spd_row)
 
         m_ap_model = Gtk.StringList.new(ACCEL_PROFILES)
-        m_ap_row = Adw.ComboRow(title="Accel Profile", model=m_ap_model)
+        m_ap_row = Adw.ComboRow(title="Профиль ускорения", model=m_ap_model)
         cur_m_ap = m_node.child_arg("accel-profile") or "default"
         if cur_m_ap in ACCEL_PROFILES:
             m_ap_row.set_selected(ACCEL_PROFILES.index(cur_m_ap))
@@ -242,26 +242,26 @@ class InputPage(BasePage):
         content.append(m_grp)
 
         # cursor
-        cursor_grp = Adw.PreferencesGroup(title="Cursor")
+        cursor_grp = Adw.PreferencesGroup(title="Курсор")
         cursor_node = next((n for n in nodes if n.name == "cursor"), None)
 
         size_val = int(cursor_node.child_arg("xcursor-size") or 24) if cursor_node else 24
         size_adj = Gtk.Adjustment(value=size_val, lower=8, upper=256, step_increment=2)
-        size_row = Adw.SpinRow(title="Cursor Size (px)", adjustment=size_adj, digits=0)
+        size_row = Adw.SpinRow(title="Размер курсора (px)", adjustment=size_adj, digits=0)
         size_row.connect("notify::value",
             lambda r, _: self._set_cursor("xcursor-size", int(r.get_value())))
         cursor_grp.add(size_row)
 
         hide_val = int(cursor_node.child_arg("hide-after-inactive-ms") or 0) if cursor_node else 0
         hide_adj = Gtk.Adjustment(value=hide_val, lower=0, upper=60000, step_increment=500)
-        hide_row = Adw.SpinRow(title="Hide After Inactive (ms)", subtitle="0 = never hide",
+        hide_row = Adw.SpinRow(title="Скрывать через (мс)", subtitle="0 = не скрывать",
             adjustment=hide_adj, digits=0)
         hide_row.connect("notify::value",
             lambda r, _: self._set_cursor("hide-after-inactive-ms", int(r.get_value())))
         cursor_grp.add(hide_row)
 
         theme_val = str(cursor_node.child_arg("xcursor-theme") or "") if cursor_node else ""
-        theme_row = Adw.EntryRow(title="Cursor Theme (e.g. Adwaita)")
+        theme_row = Adw.EntryRow(title="Тема курсора (например: Adwaita)")
         theme_row.set_text(theme_val)
         theme_row.set_show_apply_button(True)
         theme_row.connect("apply", lambda r: self._set_cursor_theme(r.get_text()))
