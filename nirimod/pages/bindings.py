@@ -236,12 +236,12 @@ class BindingsPage(BasePage):
         title_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2)
         title_vbox.set_hexpand(True)
         
-        self._main_title = Gtk.Label(label="Keybindings")
+        self._main_title = Gtk.Label(label="Сочетания клавиш")
         self._main_title.set_xalign(0.0)
         self._main_title.add_css_class("title-1")
         title_vbox.append(self._main_title)
 
-        self._kb_stats_header = Gtk.Label(label="Detecting bindings...")
+        self._kb_stats_header = Gtk.Label(label="Обнаружение привязок...")
         self._kb_stats_header.set_xalign(0.0)
         self._kb_stats_header.add_css_class("dim-label")
         self._kb_stats_header.add_css_class("caption")
@@ -276,7 +276,7 @@ class BindingsPage(BasePage):
 
         # Add Button (hidden by default, shown on List tab)
         self._add_btn = Gtk.Button(icon_name="list-add-symbolic")
-        self._add_btn.set_tooltip_text("Add binding")
+        self._add_btn.set_tooltip_text("Добавить привязку")
         self._add_btn.add_css_class("flat")
         self._add_btn.add_css_class("circular")
         self._add_btn.set_valign(Gtk.Align.CENTER)
@@ -291,8 +291,8 @@ class BindingsPage(BasePage):
         switcher_box.add_css_class("linked")
         switcher_box.set_valign(Gtk.Align.CENTER)
         
-        self._btn_physical = Gtk.ToggleButton(label="Physical")
-        self._btn_list = Gtk.ToggleButton(label="List View")
+        self._btn_physical = Gtk.ToggleButton(label="Клавиатура")
+        self._btn_list = Gtk.ToggleButton(label="Список")
         self._btn_list.set_group(self._btn_physical)
         
         self._btn_physical.connect("toggled", self._on_view_toggle)
@@ -375,7 +375,7 @@ class BindingsPage(BasePage):
         # Search
 
         # Search
-        search = Gtk.SearchEntry(placeholder_text="Filter bindings…")
+        search = Gtk.SearchEntry(placeholder_text="Фильтр привязок…")
         search.set_margin_start(0)
         search.set_margin_end(0)
         search.connect("search-changed", self._on_filter_changed)
@@ -409,7 +409,7 @@ class BindingsPage(BasePage):
 
         # Search bar
         kb_search = Gtk.SearchEntry(
-            placeholder_text="Filter by action… (e.g. spawn, focus)"
+            placeholder_text="Фильтр по действию… (например: spawn, focus)"
         )
         kb_search.connect("search-changed", self._on_kb_search_changed)
         outer.append(kb_search)
@@ -458,7 +458,7 @@ class BindingsPage(BasePage):
         self._viz.set_search(self._kb_search_query)
         n_total = len(self._binds)
         self._kb_stats_header.set_label(
-            f"{n_total} active bindings detected"
+            f"Обнаружено {n_total} активных привязок"
         )
 
     # List editor helpers (unchanged from original)
@@ -491,7 +491,7 @@ class BindingsPage(BasePage):
 
         full_action = f"{action} {action_arg_display}".strip()
         if not full_action:
-            full_action = "(unassigned)"
+            full_action = "(не назначено)"
 
         # Card container
         card = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
@@ -530,7 +530,7 @@ class BindingsPage(BasePage):
         card.append(keys_box)
 
         # 2. "ACTIONS" Label
-        actions_header = Gtk.Label(label="ACTIONS")
+        actions_header = Gtk.Label(label="ДЕЙСТВИЯ")
         actions_header.set_xalign(0.0)
         actions_header.add_css_class("nm-binding-actions-label")
         actions_header.set_margin_top(12)
@@ -631,7 +631,7 @@ class BindingsPage(BasePage):
             self._show_bind_dialog(self._binds[idx], idx)
 
     def _show_bind_dialog(self, bind: dict | None, idx: int):
-        dialog = Adw.Dialog(title="Edit Binding" if bind else "Add Binding")
+        dialog = Adw.Dialog(title="Редактировать привязку" if bind else "Добавить привязку")
         dialog.set_content_width(440)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
@@ -643,9 +643,9 @@ class BindingsPage(BasePage):
         prefs.set_vexpand(True)
 
         # Keysym group
-        keys_grp = Adw.PreferencesGroup(title="Key Combination")
+        keys_grp = Adw.PreferencesGroup(title="Комбинация клавиш")
 
-        mod_row = Adw.ActionRow(title="Modifiers")
+        mod_row = Adw.ActionRow(title="Модификаторы")
         mod_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
         mod_box.set_valign(Gtk.Align.CENTER)
         mod_checks: dict[str, Gtk.CheckButton] = {}
@@ -659,34 +659,34 @@ class BindingsPage(BasePage):
         mod_row.add_suffix(mod_box)
         keys_grp.add(mod_row)
 
-        key_entry = Adw.EntryRow(title="Key (e.g. T, F1, Return)")
+        key_entry = Adw.EntryRow(title="Клавиша (например: T, F1, Return)")
         bare = cur_keysym.split("+")[-1] if bind else ""
         key_entry.set_text(bare)
         keys_grp.add(key_entry)
         prefs.add(keys_grp)
 
         # Action group
-        act_grp = Adw.PreferencesGroup(title="Action")
+        act_grp = Adw.PreferencesGroup(title="Действие")
         act_model = Gtk.StringList.new(NIRI_ACTIONS)
-        act_combo = Adw.ComboRow(title="Action", model=act_model)
+        act_combo = Adw.ComboRow(title="Действие", model=act_model)
         cur_action = bind["action"] if bind else ""
         if cur_action in NIRI_ACTIONS:
             act_combo.set_selected(NIRI_ACTIONS.index(cur_action))
         act_grp.add(act_combo)
 
-        arg_row = Adw.EntryRow(title="Argument (for spawn, focus-workspace, etc.)")
+        arg_row = Adw.EntryRow(title="Аргумент (для spawn, focus-workspace и т.д.)")
         cur_args = (bind.get("action_args") or []) if bind else []
         arg_row.set_text(" ".join(str(a) for a in cur_args) if cur_args else "")
         act_grp.add(arg_row)
         prefs.add(act_grp)
 
         # Options
-        opt_grp = Adw.PreferencesGroup(title="Options")
-        locked_row = Adw.SwitchRow(title="Allow When Locked")
+        opt_grp = Adw.PreferencesGroup(title="Параметры")
+        locked_row = Adw.SwitchRow(title="Разрешить при блокировке")
         locked_row.set_active(bind["allow_when_locked"] if bind else False)
         opt_grp.add(locked_row)
 
-        repeat_row = Adw.SwitchRow(title="Repeat")
+        repeat_row = Adw.SwitchRow(title="Повтор")
         repeat_row.set_active(bind["repeat"] if bind else True)
         opt_grp.add(repeat_row)
         prefs.add(opt_grp)
@@ -699,7 +699,7 @@ class BindingsPage(BasePage):
         save_row.set_margin_end(16)
         save_row.set_margin_top(8)
         save_row.set_margin_bottom(16)
-        save_btn = Gtk.Button(label="Save")
+        save_btn = Gtk.Button(label="Сохранить")
         save_btn.add_css_class("suggested-action")
         save_btn.add_css_class("pill")
 
