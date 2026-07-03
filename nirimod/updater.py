@@ -46,7 +46,7 @@ def check_for_updates(callback):
                 data = json.loads(resp.read().decode("utf-8"))
                 remote_hash = data.get("sha")
                 commit_msg = data.get("commit", {}).get(
-                    "message", "New update available"
+                    "message", "Доступно новое обновление"
                 )
 
             if _update_available(local_hash, remote_hash, INSTALL_DIR):
@@ -110,10 +110,10 @@ def _build_terminal_command(terminal: str, script_path: str) -> list[str] | None
 def launch_updater_in_terminal():
 
     script_content = """#!/usr/bin/env bash
-echo "Starting NiriMod update..."
+echo "Запуск обновления NiriMod..."
 curl -sSL https://raw.githubusercontent.com/srinivasr/nirimod/main/install.sh | bash -s -- --install
 echo ""
-echo "Update complete! Press Enter to close this window."
+echo "Обновление завершено! Нажмите Enter для закрытия окна."
 read
 """
     script_path = os.path.join(tempfile.gettempdir(), "nirimod_update.sh")

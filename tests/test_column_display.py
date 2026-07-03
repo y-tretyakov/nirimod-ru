@@ -30,7 +30,7 @@ class TestColumnDisplay(unittest.TestCase):
         self.assertEqual(column_display_rule_value(0), None)
 
     def test_rule_display_maps_tabbed_selection(self):
-        selected = COLUMN_DISPLAY_RULE_LABELS.index("Tabbed")
+        selected = COLUMN_DISPLAY_RULE_LABELS.index("Вкладки")
 
         self.assertEqual(column_display_rule_index("tabbed"), selected)
         self.assertEqual(column_display_rule_value(selected), "tabbed")

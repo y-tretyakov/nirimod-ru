@@ -124,11 +124,11 @@ class TestWindowRuleActions(unittest.TestCase):
         self.assertEqual(_column_display_setting(rule), "tabbed")
         self.assertEqual(
             column_display_rule_index(_column_display_setting(rule)),
-            COLUMN_DISPLAY_RULE_LABELS.index("Tabbed"),
+            COLUMN_DISPLAY_RULE_LABELS.index("Вкладки"),
         )
 
     def test_column_display_writes_valid_niri_syntax(self):
-        node = _make_column_display_node(COLUMN_DISPLAY_RULE_LABELS.index("Tabbed"))
+        node = _make_column_display_node(COLUMN_DISPLAY_RULE_LABELS.index("Вкладки"))
         out = write_kdl([KdlNode("window-rule", children=[node])])
 
         self.assertIn('default-column-display "tabbed"', out)
@@ -150,19 +150,19 @@ class TestWindowRuleActions(unittest.TestCase):
     def test_floating_position_locations_are_edges_plus_custom(self):
         self.assertEqual(
             FLOATING_POSITION_LOCATION_LABELS,
-            ["Top", "Bottom", "Left", "Right", "Custom"],
+            ["Сверху", "Снизу", "Слева", "Справа", "Своё"],
         )
 
     def test_floating_position_custom_fields_are_offsets_only(self):
         self.assertEqual(
             FLOATING_POSITION_CUSTOM_FIELD_LABELS,
-            ["X Offset (px)", "Y Offset (px)"],
+            ["Смещение X (px)", "Смещение Y (px)"],
         )
 
     def test_floating_position_edge_locations_use_zero_offsets(self):
         self.assertEqual(
             _floating_position_location_index(0, 0, "right"),
-            FLOATING_POSITION_LOCATION_LABELS.index("Right"),
+            FLOATING_POSITION_LOCATION_LABELS.index("Справа"),
         )
 
     def test_floating_position_edge_offsets_are_custom(self):

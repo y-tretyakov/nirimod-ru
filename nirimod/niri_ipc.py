@@ -113,7 +113,7 @@ def validate_config(config_path: str | None = None) -> tuple[bool, str]:
     stdout, stderr, rc = _run_sync(cmd, timeout=10.0)
     if rc == 0:
         return True, stdout.strip() or "Конфиг корректен."
-    return False, stderr.strip() or stdout.strip() or "Unknown validation error."
+    return False, stderr.strip() or stdout.strip() or "Неизвестная ошибка проверки."
 
 
 def load_config_file() -> tuple[bool, str]:
@@ -122,7 +122,7 @@ def load_config_file() -> tuple[bool, str]:
     )
     if rc == 0:
         return True, stdout.strip() or "Конфиг применён."
-    return False, stderr.strip() or stdout.strip() or "Config reload failed."
+    return False, stderr.strip() or stdout.strip() or "Перезагрузка конфига не удалась."
 
 
 def get_outputs(callback: Callable[[list[dict]], None]) -> None:

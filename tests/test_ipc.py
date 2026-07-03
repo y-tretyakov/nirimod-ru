@@ -100,7 +100,7 @@ class TestLoadConfigFile(unittest.TestCase):
         self.assertTrue(ok)
         self.assertEqual(captured["args"], ["niri", "msg", "action", "load-config-file"])
         self.assertEqual(captured["timeout"], 10.0)
-        self.assertIn("applied", msg)
+        self.assertIn("применён", msg)
 
     def test_load_config_file_reports_failure(self):
         from nirimod import niri_ipc

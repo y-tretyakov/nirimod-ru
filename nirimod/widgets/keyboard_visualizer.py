@@ -224,7 +224,7 @@ class KeyboardVisualizer(Gtk.Box):
 
         if not HAS_CAIRO:
             err_lbl = Gtk.Label(
-                label="Cairo is not installed — the physical keyboard view is unavailable.\nInstall dev-python/pycairo and restart.",
+                label="Cairo не установлен — физическая клавиатура недоступна.\nУстановите dev-python/pycairo и перезапустите.",
                 justify=Gtk.Justification.CENTER,
             )
             err_lbl.add_css_class("dim-label")
@@ -525,10 +525,10 @@ class KeyboardVisualizer(Gtk.Box):
             hb.append(lbl)
             return hb
 
-        box.append(_chip("rgba(147, 51, 234, 0.7)", "Bound"))
-        box.append(_chip("rgba(192, 97, 203, 1.0)", "Search match"))
-        box.append(_chip("rgba(168, 85, 247, 1.0)", "Selected"))
-        box.append(_chip("rgba(24, 24, 27, 1.0)", "Unbound"))
+        box.append(_chip("rgba(147, 51, 234, 0.7)", "Назначена"))
+        box.append(_chip("rgba(192, 97, 203, 1.0)", "Поиск совпадений"))
+        box.append(_chip("rgba(168, 85, 247, 1.0)", "Выбрана"))
+        box.append(_chip("rgba(24, 24, 27, 1.0)", "Не назначена"))
         return box
 
 
@@ -568,7 +568,7 @@ class _ActionPanel(Gtk.Box):
         self._header_add_btn = Gtk.Button(icon_name="list-add-symbolic")
         self._header_add_btn.add_css_class("flat")
         self._header_add_btn.add_css_class("circular")
-        self._header_add_btn.set_tooltip_text("Add another binding for this key")
+        self._header_add_btn.set_tooltip_text("Добавить ещё одну привязку для этой клавиши")
         self._header_add_btn.set_valign(Gtk.Align.CENTER)
         self._header_add_btn.set_visible(False)
         self._header_add_btn.connect("clicked", self._on_header_add_clicked)
@@ -604,10 +604,10 @@ class _ActionPanel(Gtk.Box):
 
         if not binds:
             self._key_label.set_label(key_id.upper())
-            self._count_label.set_label("No bindings")
+            self._count_label.set_label("Нет привязок")
             self._header_add_btn.set_visible(False)
             
-            add_btn = Gtk.Button(label=f"Create Binding for {key_id.upper()}")
+            add_btn = Gtk.Button(label=f"Создать привязку для {key_id.upper()}")
             add_btn.add_css_class("suggested-action")
             add_btn.add_css_class("pill")
             add_btn.set_halign(Gtk.Align.CENTER)
@@ -620,14 +620,15 @@ class _ActionPanel(Gtk.Box):
         else:
             self._key_label.set_label(key_id.upper())
             n = len(binds)
-            self._count_label.set_label(f"{n} binding" + ("s" if n != 1 else ""))
+            suffix = "и" if n != 1 else "а"
+            self._count_label.set_label(f"{n} привязк{suffix}")
             self._header_add_btn.set_visible(True)
             for b in binds:
                 keysym = b.get("keysym", "?")
                 action = b.get("action", "")
                 args = b.get("action_args") or []
                 arg_str = " ".join(str(a) for a in args)
-                full_action = f"{action} {arg_str}".strip() or "(no action)"
+                full_action = f"{action} {arg_str}".strip() or "(нет действия)"
 
                 row = Adw.ActionRow(title=GLib.markup_escape_text(full_action))
 
@@ -668,7 +669,7 @@ class _ActionPanel(Gtk.Box):
 
                 if b.get("allow_when_locked"):
                     lock = Gtk.Label(label="🔒")
-                    lock.set_tooltip_text("Allowed when screen is locked")
+                    lock.set_tooltip_text("Разрешено при блокировке экрана")
                     lock.set_valign(Gtk.Align.CENTER)
                     row.add_suffix(lock)
                     

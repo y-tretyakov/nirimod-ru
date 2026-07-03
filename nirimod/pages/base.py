@@ -36,7 +36,7 @@ def make_toolbar_page(
         menu.append_section(None, kofi_section)
 
         menu_btn = Gtk.MenuButton(icon_name="open-menu-symbolic")
-        menu_btn.set_tooltip_text("Menu")
+        menu_btn.set_tooltip_text("Меню")
         menu_btn.add_css_class("flat")
         menu_btn.set_menu_model(menu)
         header.pack_end(menu_btn)

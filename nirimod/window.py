@@ -975,7 +975,7 @@ class NiriModWindow(Adw.ApplicationWindow):
         dialog = Gtk.FileDialog()
         dialog.set_title("Выберите конфиг Niri")
         f = Gtk.FileFilter()
-        f.set_name("KDL files")
+        f.set_name("Файлы KDL")
         f.add_pattern("*.kdl")
         filters = Gio.ListStore.new(Gtk.FileFilter)
         filters.append(f)

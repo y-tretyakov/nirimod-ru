@@ -752,7 +752,7 @@ class AnimationsPage(BasePage):
             kdl_text = entry["local_path"].read_text(encoding="utf-8")
             self._do_apply_kdl_preset(kdl_text, entry["display_name"], row)
         except Exception as exc:
-            self.show_toast(f"Failed to read local preset: {exc}")
+            self.show_toast(f"Ошибка чтения локального пресета: {exc}")
 
     def _delete_local_preset(self, entry: dict):
         try:
@@ -761,10 +761,10 @@ class AnimationsPage(BasePage):
             parent = entry["local_path"].parent
             if parent.exists() and not any(parent.iterdir()):
                 parent.rmdir()
-            self.show_toast(f"🗑 {entry['display_name']} deleted")
+            self.show_toast(f"🗑 {entry['display_name']} удалён")
             self._refresh_local_presets_group()
         except Exception as exc:
-            self.show_toast(f"Delete failed: {exc}")
+            self.show_toast(f"Ошибка удаления: {exc}")
 
     def _on_restore_previous(self, _btn):
         """Restore the animations block that was saved before the last preset apply."""
@@ -791,11 +791,11 @@ class AnimationsPage(BasePage):
             self._active_preset_name = None
             self._save_state()
             self._commit("restore previous animations")
-            self.show_toast("↩ Previous animations restored")
+            self.show_toast("↩ Предыдущие анимации восстановлены")
             self._update_header()
             self._build_custom_tab() # Refresh UI components
         except Exception as exc:
-            self.show_toast(f"Restore failed: {exc}")
+            self.show_toast(f"Ошибка восстановления: {exc}")
 
     def _build_preset_group(
         self,
@@ -875,7 +875,7 @@ class AnimationsPage(BasePage):
                 sp2.stop()
                 if isinstance(result, Exception):
                     err_row = Adw.ActionRow(
-                        title="Unable to fetch presets",
+                        title="Не удалось загрузить пресеты",
                         subtitle=str(result),
                     )
                     err_row.add_prefix(Gtk.Image.new_from_icon_name("network-error-symbolic"))
@@ -896,8 +896,8 @@ class AnimationsPage(BasePage):
     def _build_nirimation_group(self) -> Adw.PreferencesGroup:
         """Build the XansiVA/nirimation presets section."""
         return self._build_preset_group(
-            title="Nirimation Community Presets",
-            description="GLSL shader animations from XansiVA/nirimation — replaces your current animations block.",
+            title="Пресеты сообщества Nirimation",
+            description="GLSL-шейдерные анимации из XansiVA/nirimation — заменяет ваш текущий блок анимаций.",
             fetch_fn=_fetch_nirimation_presets,
             bust_cache_attr="_nirimation_cache",
             rows_attr="_nirimation_rows",
@@ -908,8 +908,8 @@ class AnimationsPage(BasePage):
     def _build_jgarza_group(self) -> Adw.PreferencesGroup:
         """Build the jgarza9788/niri-animation-collection presets section."""
         return self._build_preset_group(
-            title="Niri Animation Collection",
-            description="Community GLSL shader presets from jgarza9788/niri-animation-collection — replaces your current animations block.",
+            title="Коллекция анимаций Niri",
+            description="Пресеты GLSL-шейдеров сообщества из jgarza9788/niri-animation-collection — заменяет ваш текущий блок анимаций.",
             fetch_fn=_fetch_jgarza_presets,
             bust_cache_attr="_jgarza_cache",
             rows_attr="_jgarza_rows",
@@ -926,7 +926,7 @@ class AnimationsPage(BasePage):
 
         # Download-to-disk button
         dl_btn = Gtk.Button(icon_name="folder-download-symbolic")
-        dl_btn.set_tooltip_text("Download preset for offline use")
+        dl_btn.set_tooltip_text("Скачать пресет для офлайн-использования")
         dl_btn.add_css_class("flat")
         dl_btn.add_css_class("circular")
         dl_btn.set_valign(Gtk.Align.CENTER)
@@ -937,7 +937,7 @@ class AnimationsPage(BasePage):
         row.add_suffix(dl_btn)
 
         # Apply button
-        apply_btn = Gtk.Button(label="Apply")
+        apply_btn = Gtk.Button(label="Применить")
         apply_btn.add_css_class("suggested-action")
         apply_btn.add_css_class("pill")
         apply_btn.set_valign(Gtk.Align.CENTER)
@@ -955,7 +955,7 @@ class AnimationsPage(BasePage):
         dest_file = dest_dir / entry["name"]
 
         dl_btn.set_sensitive(False)
-        self.show_toast(f"Downloading {entry['display_name']}…", timeout=5)
+        self.show_toast(f"Загрузка {entry['display_name']}…", timeout=5)
 
         def _worker():
             try:
@@ -972,19 +972,19 @@ class AnimationsPage(BasePage):
         def _on_done(kdl_bytes, error):
             dl_btn.set_sensitive(True)
             if error:
-                self.show_toast(f"Download failed: {error}")
+                self.show_toast(f"Ошибка загрузки: {error}")
                 return
             try:
                 dest_dir.mkdir(parents=True, exist_ok=True)
                 dest_file.write_bytes(kdl_bytes)
-                self.show_toast(f"{entry['display_name']} saved locally")
+                self.show_toast(f"{entry['display_name']} сохранён локально")
                 # Update the download button to show it's already saved
                 dl_btn.set_icon_name("emblem-ok-symbolic")
-                dl_btn.set_tooltip_text("Already downloaded")
+                dl_btn.set_tooltip_text("Уже скачан")
                 dl_btn.set_sensitive(False)
                 self._refresh_local_presets_group()
             except Exception as exc:
-                self.show_toast(f"Save failed: {exc}")
+                self.show_toast(f"Ошибка сохранения: {exc}")
 
         threading.Thread(target=_worker, daemon=True).start()
 
@@ -992,16 +992,16 @@ class AnimationsPage(BasePage):
     def _confirm_apply_preset(self, entry, row, source_label="community"):
         try:
             dialog = Adw.AlertDialog(
-                heading=f"Apply \"{entry['display_name']}\"?",
+                heading=f"Применить «{entry['display_name']}»?",
                 body=(
-                    "This will fully replace your current animations block with the "
-                    f"\"{entry['display_name']}\" preset from {source_label}.\n\n"
-                    "Your existing bezier curves and per-animation settings will be overwritten. "
-                    "You can undo this with Ctrl+Z."
+                    "Это полностью заменит ваш текущий блок анимаций на пресет "
+                    f"«{entry['display_name']}» из {source_label}.\n\n"
+                    "Ваши кривые Безье и настройки отдельных анимаций будут перезаписаны. "
+                    "Можно отменить сочетанием Ctrl+Z."
                 ),
             )
-            dialog.add_response("cancel", "Cancel")
-            dialog.add_response("apply", "Apply Preset")
+            dialog.add_response("cancel", "Отмена")
+            dialog.add_response("apply", "Применить пресет")
             dialog.set_response_appearance("apply", Adw.ResponseAppearance.SUGGESTED)
             dialog.set_default_response("cancel")
             dialog.set_close_response("cancel")
@@ -1018,7 +1018,7 @@ class AnimationsPage(BasePage):
 
     def _apply_nirimation_preset(self, entry, row):
         row.set_sensitive(False)
-        self.show_toast(f"Downloading {entry['display_name']}...", timeout=5)
+        self.show_toast(f"Загрузка {entry['display_name']}...", timeout=5)
 
         def _worker():
             try:
@@ -1035,7 +1035,7 @@ class AnimationsPage(BasePage):
         def _on_downloaded(kdl_text, error):
             row.set_sensitive(True)
             if error:
-                self.show_toast(f"Failed to download preset: {error}")
+                self.show_toast(f"Ошибка загрузки пресета: {error}")
                 return
             self._do_apply_kdl_preset(kdl_text, entry["display_name"], row)
 
@@ -1048,7 +1048,7 @@ class AnimationsPage(BasePage):
                 (n for n in preset_nodes if n.name == "animations"), None
             )
             if preset_anim is None:
-                self.show_toast("Preset has no animations block — nothing applied.")
+                self.show_toast("В пресете нет блока анимаций — ничего не применено.")
                 return
 
             user_nodes = self._nodes
@@ -1081,9 +1081,9 @@ class AnimationsPage(BasePage):
             self._save_state()
             self._commit(f"preset: {display_name}")
             self._update_header()
-            self.show_toast(f"\u2728 {display_name} preset applied!")
+            self.show_toast(f"\u2728 {display_name} применён!")
         except Exception as exc:
-            self.show_toast(f"Error applying preset: {exc}")
+            self.show_toast(f"Ошибка применения пресета: {exc}")
 
     def _apply_preset(self, curve: tuple, name: str):
         self._bezier_editor.set_curve(*curve)
@@ -1216,7 +1216,7 @@ class AnimationsPage(BasePage):
 
         curve_str = f"{x1:.3f} {y1:.3f} {x2:.3f} {y2:.3f}"
         self._commit(f"animation {anim_key} bezier")
-        self.show_toast(f"Bezier applied to {anim_key}")
+        self.show_toast(f"Кривая Безье применена к {anim_key}")
 
         if apply_row:
             apply_row.set_subtitle(f"cubic-bezier {curve_str}")

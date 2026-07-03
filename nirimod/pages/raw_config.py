@@ -261,7 +261,7 @@ class RawConfigPage(BasePage):
             body="Несохранённые правки будут потеряны.",
         )
         dialog.add_response("cancel", "Отмена")
-        dialog.add_response("discard", "Discard")
+        dialog.add_response("discard", "Отбросить")
         dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE)
         dialog.set_default_response("cancel")
 

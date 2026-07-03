@@ -231,7 +231,7 @@ class OutputsPage(BasePage):
             )
             out_scale = o.get("logical", {}).get("scale", 1.0)
             res = f"{mode.get('width', '?')}×{mode.get('height', '?')}"
-            scale_text = f"Scale: {out_scale}x"
+            scale_text = f"Масштаб: {out_scale}×"
 
             cr.set_source_rgba(1, 1, 1, 0.95 if is_sel else 0.7)
 
