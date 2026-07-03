@@ -1,7 +1,7 @@
 # Maintainer: Your Name <your.email@example.com>
 
 pkgname=nirimod-ru-git
-pkgver=0.1.0
+pkgver=r90.20260703
 pkgrel=1
 pkgdesc="Russian-translated fork of nirimod - A polished GTK4/libadwaita GUI configurator for the niri Wayland compositor"
 arch=('x86_64')
@@ -11,7 +11,7 @@ depends=(
   'python-gobject'
   'gtk4'
   'libadwaita'
-  'pycairo'
+  'python-cairo'
 )
 makedepends=(
   'git'
@@ -29,7 +29,11 @@ validpgpkeys=()
 
 pkgver() {
   cd "$srcdir/$pkgname"
-  git describe --long --tags 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' || printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git log -1 --format='%cd' --date=format:'%Y%m%d')"
+  tag=$(git describe --long --tags 2>/dev/null) && {
+    echo "$tag" | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+    return
+  }
+  printf 'r%s.%s' "$(git rev-list --count HEAD)" "$(git log -1 --format='%cd' --date=format:'%Y%m%d')"
 }
 
 build() {
@@ -40,6 +44,7 @@ build() {
 package() {
   cd "$srcdir/$pkgname"
   python -m installer --prefix="$pkgdir/usr" dist/*.whl
+  find "$pkgdir" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
 
   install -Dm644 data/nirimod.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/nirimod.svg"
 
@@ -59,5 +64,4 @@ StartupNotify=true
 StartupWMClass=nirimod
 EOF
 
-  gtk-update-icon-cache -q -t -f "$pkgdir/usr/share/icons/hicolor" || true
 }

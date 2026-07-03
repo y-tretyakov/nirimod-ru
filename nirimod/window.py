@@ -746,7 +746,7 @@ class NiriModWindow(Adw.ApplicationWindow):
         def _on_kofi_response(dlg, response):
             app_settings.set("kofi_v3_dont_show", dont_show_check.get_active())
             if response == "kofi":
-                Gio.AppInfo.launch_default_for_uri("https://ko-fi.com/srinivasr", None)
+                Gio.AppInfo.launch_default_for_uri("https://ko-fi.com/code_warlord", None)
 
         dialog.connect("response", _on_kofi_response)
         dialog.present(self)
