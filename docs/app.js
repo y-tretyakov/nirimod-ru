@@ -42,6 +42,28 @@ document.querySelectorAll('.tab').forEach((button) => {
   });
 });
 
+const menuToggle = document.querySelector('[data-menu-toggle]');
+const nav = document.querySelector('[data-nav]');
+
+menuToggle?.addEventListener('click', () => {
+  menuToggle.classList.toggle('is-active');
+  nav?.classList.toggle('is-open');
+});
+
+document.querySelectorAll('[data-nav-close]').forEach((link) => {
+  link.addEventListener('click', () => {
+    menuToggle?.classList.remove('is-active');
+    nav?.classList.remove('is-open');
+  });
+});
+
+document.addEventListener('click', (e) => {
+  if (nav?.classList.contains('is-open') && !e.target.closest('.topbar')) {
+    menuToggle?.classList.remove('is-active');
+    nav?.classList.remove('is-open');
+  }
+});
+
 document.querySelectorAll('.faq-item').forEach((item) => {
   const button = item.querySelector('.faq-question');
   button?.addEventListener('click', () => {
