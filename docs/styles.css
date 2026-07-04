@@ -247,8 +247,8 @@ img {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 36px;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 48px;
   padding: 72px 0 40px;
   align-items: center;
 }
@@ -338,7 +338,7 @@ img {
 
 .hero-visual {
   position: relative;
-  min-height: 440px;
+  min-height: 520px;
   display: grid;
   place-items: center;
 }
@@ -351,23 +351,22 @@ img {
 }
 
 .orb-a {
-  width: 180px;
-  height: 180px;
+  width: 280px;
+  height: 280px;
   background: rgba(110, 231, 255, 0.22);
-  top: 40px;
-  right: 40px;
+  top: -20px;
+  right: -20px;
 }
 
 .orb-b {
-  width: 240px;
-  height: 240px;
+  width: 360px;
+  height: 360px;
   background: rgba(59, 130, 246, 0.24);
-  bottom: 20px;
-  left: 20px;
+  bottom: -40px;
+  left: -40px;
   animation-delay: -4s;
 }
 
-.screenshot-card,
 .image-frame,
 .timeline-card,
 .panel,
@@ -380,17 +379,11 @@ img {
   border-radius: 24px;
 }
 
-.screenshot-card {
-  position: relative;
-  overflow: hidden;
-  padding: 12px;
-  max-width: 500px;
-  backdrop-filter: blur(20px);
-}
-
-.screenshot-card img,
-.image-frame {
-  border-radius: 16px;
+.hero-screenshot {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 24px;
 }
 
 .marquee {
