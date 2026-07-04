@@ -1,14 +1,27 @@
 const root = document.documentElement;
 
 let ticking = false;
+const topbar = document.querySelector('.topbar');
+let topbarHeight = 0;
+
+const updateTopbarHeight = () => {
+  if (topbar) {
+    topbarHeight = topbar.offsetHeight;
+    topbar.style.setProperty('--topbar-height', `${topbarHeight}px`);
+  }
+};
+updateTopbarHeight();
+window.addEventListener('resize', updateTopbarHeight);
+
 window.addEventListener('scroll', () => {
   if (!ticking) {
     requestAnimationFrame(() => {
-      const topbar = document.querySelector('.topbar');
-      if (window.scrollY > 10) {
-        topbar?.classList.add('is-scrolled');
-      } else {
-        topbar?.classList.remove('is-scrolled');
+      if (topbar) {
+        if (window.scrollY > topbarHeight) {
+          topbar.classList.add('is-scrolled');
+        } else {
+          topbar.classList.remove('is-scrolled');
+        }
       }
       ticking = false;
     });

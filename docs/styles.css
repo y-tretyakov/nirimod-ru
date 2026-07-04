@@ -10,6 +10,7 @@
   --accent-strong: #3b82f6;
   --border: rgba(255, 255, 255, 0.12);
   --shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+  --topbar-bg: rgba(10, 20, 36, 0.5);
 }
 
 :root[data-theme="light"] {
@@ -24,6 +25,7 @@
   --accent-strong: #0f172a;
   --border: rgba(8, 16, 32, 0.1);
   --shadow: 0 20px 70px rgba(15, 23, 42, 0.12);
+  --topbar-bg: rgba(255, 255, 255, 0.5);
 }
 
 * {
@@ -53,23 +55,35 @@ img {
 .page-shell {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 24px 24px 64px;
+  padding: 0 24px 64px;
 }
 
 .topbar {
   position: sticky;
   top: 0;
   z-index: 20;
-  border-bottom: 1px solid transparent;
-  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.topbar.is-scrolled {
-  background: var(--bg-elevated);
+.topbar::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--topbar-height, 66px);
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  z-index: -1;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease;
+}
+
+.topbar.is-scrolled::before {
+  background: var(--topbar-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom-color: var(--border);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 .topbar-inner {
@@ -77,9 +91,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 14px 24px;
+  padding: 14px 0;
 }
 
 .brand {
@@ -782,7 +794,7 @@ pre {
 
 @media (max-width: 640px) {
   .topbar-inner {
-    padding: 12px 16px;
+    padding: 12px 0;
   }
 
   .page-shell {
