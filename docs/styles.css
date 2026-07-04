@@ -220,9 +220,10 @@ img {
   background: var(--surface);
 }
 
-.icon-github {
-  width: 20px;
-  height: 20px;
+.icon-github,
+.theme-icon {
+  width: 24px;
+  height: 24px;
 }
 
 .icon-button {

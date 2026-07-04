@@ -29,12 +29,14 @@ window.addEventListener('scroll', () => {
   }
 });
 const themeToggle = document.querySelector('[data-theme-toggle]');
-const themeIcon = document.querySelector('[data-theme-icon]');
+const themeIconSun = document.querySelector('[data-theme-icon-sun]');
+const themeIconMoon = document.querySelector('[data-theme-icon-moon]');
 
 const setTheme = (theme) => {
   root.setAttribute('data-theme', theme);
   localStorage.setItem('theme', theme);
-  themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+  themeIconSun.style.display = theme === 'dark' ? '' : 'none';
+  themeIconMoon.style.display = theme === 'dark' ? 'none' : '';
 };
 
 const savedTheme = localStorage.getItem('theme');
