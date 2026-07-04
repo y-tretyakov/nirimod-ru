@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="NiriMod RU — русская версия GUI для настройки niri: мониторы, ввод, клавиатура, анимации, правила окон и многое другое."
+    />
+    <title>NiriMod RU — современный редактор конфигурации niri</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#hero">
+          <span class="brand-logo" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+            </svg>
+          </span>
+          <span>NiriMod RU</span>
+        </a>
+        <nav class="nav-links">
+          <a href="#features">Возможности</a>
+          <a href="#install">Установка</a>
+          <a href="#faq">FAQ</a>
+          <button class="icon-button" data-theme-toggle aria-label="Переключить тему">
+            <span data-theme-icon>☀️</span>
+          </button>
+        </nav>
+      </header>
+
+      <main id="hero">
+        <section class="hero reveal reveal-up">
+          <div class="hero-copy">
+            <p class="eyebrow">Русская версия GTK4/libadwaita для niri</p>
+            <h1>Настраивайте niri через интерфейс, который ощущается как часть рабочего стола.</h1>
+            <p class="intro">
+              NiriMod RU помогает менять мониторы, ввод, сочетания клавиш, анимации, правила окон и рабочие пространства без ручного редактирования KDL.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#install">Установить</a>
+              <a class="button secondary" href="#features">Открыть возможности</a>
+            </div>
+            <ul class="hero-highlights">
+              <li>Безопасное редактирование конфигурации</li>
+              <li>Многофайловые конфигурации</li>
+              <li>Поддержка резервных копий и отката</li>
+            </ul>
+          </div>
+          <div class="hero-visual">
+            <div class="orb orb-a"></div>
+            <div class="orb orb-b"></div>
+            <div class="screenshot-card">
+              <img src="./media/1.png" alt="Интерфейс NiriMod RU с настройками мониторов и анимаций" />
+            </div>
+          </div>
+        </section>
+
+        <section class="marquee reveal reveal-right" aria-label="Ключевые фичи">
+          <div class="marquee-track">
+            <span>Мониторы</span>
+            <span>Ввод</span>
+            <span>Сочетания клавиш</span>
+            <span>Анимации</span>
+            <span>Рабочие пространства</span>
+            <span>Правила окон</span>
+            <span>Автозапуск</span>
+            <span>Жесты</span>
+          </div>
+        </section>
+
+        <section id="features" class="section">
+          <div class="section-heading reveal reveal-up">
+            <p class="eyebrow">Что умеет проект</p>
+            <h2>Полный набор инструментов для тонкой настройки niri</h2>
+            <p>
+              Проект не заменяет niri, а делает работу с его конфигурацией понятной, безопасной и визуальной.
+            </p>
+          </div>
+          <div class="feature-grid">
+            <article class="card reveal reveal-left">
+              <h3>Мониторы</h3>
+              <p>Разрешение, частота, масштаб, позиция, трансформация, VRR и отключение отдельных выходов.</p>
+            </article>
+            <article class="card reveal reveal-right">
+              <h3>Ввод</h3>
+              <p>Настройка XKB, повтора клавиш, фокуса по наведению, прокрутки, тачпада, мыши и курсора.</p>
+            </article>
+            <article class="card reveal reveal-left">
+              <h3>Сочетания клавиш</h3>
+              <p>Визуальная карта клавиатуры, список привязок, поиск и редактор действий niri.</p>
+            </article>
+            <article class="card reveal reveal-right">
+              <h3>Внешний вид</h3>
+              <p>Тени, границы, скругления, прозрачность и эффекты размытия для окон.</p>
+            </article>
+            <article class="card reveal reveal-left">
+              <h3>Анимации</h3>
+              <p>Глобальное включение анимаций, замедление, редактор easing-кривых и пресеты под сценарии.</p>
+            </article>
+            <article class="card reveal reveal-right">
+              <h3>Расположение</h3>
+              <p>Промежутки между окнами, ширина колонок, центрирование, struts, фон и поведение CSD.</p>
+            </article>
+            <article class="card reveal reveal-left">
+              <h3>Рабочие пространства</h3>
+              <p>Именованные workspace и привязка к мониторам для аккуратной структуры рабочего стола.</p>
+            </article>
+            <article class="card reveal reveal-right">
+              <h3>Правила окон</h3>
+              <p>Условия по App ID, заголовку или namespace, размещение, размеры и визуальные эффекты.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section split-section">
+          <div class="content-block reveal reveal-left">
+            <p class="eyebrow">Безопасность прежде всего</p>
+            <h2>Изменения применяются аккуратно и с контролем</h2>
+            <p>
+              Перед сохранением выполняется проверка конфигурации через niri validate. Если проверка не проходит, изменения не применяются, а все правки можно откатить или восстановить из резервной копии.
+            </p>
+            <ul class="check-list">
+              <li>Проверка перед сохранением</li>
+              <li>Работа через временные файлы</li>
+              <li>Резервные копии и отмена действий</li>
+              <li>Поддержка ручных правок через встроенный KDL-редактор</li>
+            </ul>
+          </div>
+          <div class="content-block reveal reveal-right">
+            <div class="timeline-card">
+              <div class="timeline-step">
+                <strong>1. Редактируете</strong>
+                <span>Меняете параметры в привычном интерфейсе.</span>
+              </div>
+              <div class="timeline-step">
+                <strong>2. Проверяете</strong>
+                <span>Система запускает niri validate и блокирует сбойные правки.</span>
+              </div>
+              <div class="timeline-step">
+                <strong>3. Применяете</strong>
+                <span>Сохраняете изменения с возможностью отката и восстановлением из копий.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section split-section alt-bg">
+          <div class="content-block reveal reveal-left">
+            <img class="image-frame" src="./media/multiple_configs.png" alt="Поддержка многофайловой конфигурации в NiriMod RU" />
+          </div>
+          <div class="content-block reveal reveal-right">
+            <p class="eyebrow">Многофайловые конфигурации</p>
+            <h2>Управление сложными проектами без потери структуры</h2>
+            <p>
+              NiriMod RU умеет читать конфигурации, разделённые через include, и сохранять изменённые параметры обратно в исходные файлы. Это удобно для кастомных сборок и дополнительных слоёв окружения.
+            </p>
+            <ul class="check-list">
+              <li>Поддержка файлов для ввода, мониторов, правил окон и автозапуска</li>
+              <li>Изменения затрагивают только известные настройки</li>
+              <li>Подходит для окружений с дополнительными shell-оболочками и слоями</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="install" class="section">
+          <div class="section-heading reveal reveal-up">
+            <p class="eyebrow">Установка</p>
+            <h2>Выберите удобный путь для своей системы</h2>
+          </div>
+
+          <div class="tabs reveal reveal-up" role="tablist" aria-label="Варианты установки">
+            <button class="tab is-active" data-tab="arch">Arch / CachyOS</button>
+            <button class="tab" data-tab="package">Готовый пакет</button>
+            <button class="tab" data-tab="other">Другие Linux</button>
+          </div>
+
+          <div class="tab-panels">
+            <article class="panel is-active" id="panel-arch">
+              <div class="panel-content">
+                <div>
+                  <h3>Сборка из PKGBUILD</h3>
+                  <p>Подходит для Arch Linux и CachyOS. Сборка через makepkg и установка пакета одним шагом.</p>
+                </div>
+                <pre><code>mkdir -p ~/build
+cd ~/build
+git clone https://github.com/y-tretyakov/nirimod-ru.git
+cd nirimod-ru
+makepkg -si</code></pre>
+              </div>
+            </article>
+            <article class="panel" id="panel-package">
+              <div class="panel-content">
+                <div>
+                  <h3>Установка уже собранного .pkg.tar.zst</h3>
+                  <p>Если архив уже подготовлен на другой машине или в CI, достаточно установить его напрямую.</p>
+                </div>
+                <pre><code>sudo pacman -U ./nirimod-ru-git-r91.20260703-1-x86_64.pkg.tar.zst</code></pre>
+              </div>
+            </article>
+            <article class="panel" id="panel-other">
+              <div class="panel-content">
+                <div>
+                  <h3>Для других дистрибутивов</h3>
+                  <p>Используйте установочный скрипт и выберите нужный режим через флаги.</p>
+                </div>
+                <div class="code-block-row">
+                  <pre><code>curl -sSL https://raw.githubusercontent.com/y-tretyakov/nirimod-ru/main/install.sh | bash</code></pre>
+                  <button class="copy-button" data-copy="curl -sSL https://raw.githubusercontent.com/y-tretyakov/nirimod-ru/main/install.sh | bash">Копировать</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section grid-section">
+          <div class="info-card reveal reveal-left">
+            <p class="eyebrow">Требования</p>
+            <h3>Что нужно для работы</h3>
+            <ul class="check-list compact">
+              <li>Linux с Wayland</li>
+              <li>Установленный niri</li>
+              <li>Python 3.12+</li>
+              <li>GTK4, libadwaita, PyGObject, Pycairo</li>
+              <li>uv для запуска из исходников</li>
+            </ul>
+          </div>
+          <div class="info-card reveal reveal-right">
+            <p class="eyebrow">Разработка</p>
+            <h3>Проверка и тестирование</h3>
+            <pre><code>uv sync --dev
+uv run pytest</code></pre>
+            <p>Для проверки PKGBUILD можно использовать makepkg и namcap.</p>
+          </div>
+        </section>
+
+        <section id="faq" class="section">
+          <div class="section-heading reveal reveal-up">
+            <p class="eyebrow">FAQ</p>
+            <h2>Короткие ответы на частые вопросы</h2>
+          </div>
+          <div class="faq-list">
+            <article class="faq-item reveal reveal-up">
+              <button class="faq-question">
+                Чем NiriMod RU отличается от оригинального NiriMod?
+                <span>+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Это русскоязычный форк с адаптированным интерфейсом, документацией и пакетными инструкциями для пользователей Linux.</p>
+              </div>
+            </article>
+            <article class="faq-item reveal reveal-up">
+              <button class="faq-question">
+                Может ли приложение заменить мой конфиг?
+                <span>+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Нет. NiriMod RU редактирует существующую конфигурацию и проверяет её через niri validate, сохраняя резервные копии.</p>
+              </div>
+            </article>
+            <article class="faq-item reveal reveal-up">
+              <button class="faq-question">
+                Что делать, если niri не запущен?
+                <span>+</span>
+              </button>
+              <div class="faq-answer">
+                <p>Можно открыть и сохранить конфигурацию, но применить её через IPC получится только после запуска композитора.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer reveal reveal-up">
+        <p>Сделано для тех, кто любит niri и хочет настраивать его без лишней боли.</p>
+        <a class="button secondary" href="https://github.com/y-tretyakov/nirimod-ru" target="_blank" rel="noreferrer">Открыть GitHub</a>
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
