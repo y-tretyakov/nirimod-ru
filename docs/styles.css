@@ -60,12 +60,26 @@ img {
   position: sticky;
   top: 0;
   z-index: 20;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.topbar.is-scrolled {
+  background: var(--bg-elevated);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom-color: var(--border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.topbar-inner {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px 24px;
 }
 
 .brand {
@@ -767,6 +781,10 @@ pre {
 }
 
 @media (max-width: 640px) {
+  .topbar-inner {
+    padding: 12px 16px;
+  }
+
   .page-shell {
     padding: 16px 16px 40px;
   }

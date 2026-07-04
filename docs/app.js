@@ -1,4 +1,20 @@
 const root = document.documentElement;
+
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      const topbar = document.querySelector('.topbar');
+      if (window.scrollY > 10) {
+        topbar?.classList.add('is-scrolled');
+      } else {
+        topbar?.classList.remove('is-scrolled');
+      }
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
 const themeToggle = document.querySelector('[data-theme-toggle]');
 const themeIcon = document.querySelector('[data-theme-icon]');
 
